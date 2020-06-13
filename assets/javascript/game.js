@@ -34,5 +34,5 @@ knightMove = (currentSpot) => {
     };
 };
 
-//I would like the current spot of the knight to be grabed when the player types the coordinates or moves the knight with the mouse.
+//I would like the current spot of the knight to be grabbed when the player types the coordinates or moves the knight with the mouse.
 knightMove('e5');
