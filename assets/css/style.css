@@ -4,11 +4,11 @@ table {
     height: 900px;
 }
 
-td {
+.cell {
     height: 30px;
     width: 30px;
 }
 
 .dark {
-    background: black;
+    background:black;
 }

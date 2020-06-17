@@ -29,13 +29,13 @@
                         echo "<td class='legend'>" . $xAxis[(7-$row)] . "</td>";
                     }
                     if(($row + $column) % 2 == 0){
-                        echo "<td id='" . $xAxis[$column] . $yAxis[$row] . "' class='dark'></td>";
+                        echo "<td id='" . $xAxis[7-$row] . $yAxis[$column] . "' class='cell dark'></td>";
                     } else {
-                        echo "<td id='" . $xAxis[$column] . $yAxis[$row] . "' class='light'></td>";
+                        echo "<td id='" . $xAxis[7-$row] . $yAxis[$column] . "' class='cell light'></td>";
                     }
                 }
                 echo "</tr>";
-            }
+            } 
         ?>
     </table>
 </body>
