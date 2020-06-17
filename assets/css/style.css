@@ -1,3 +1,4 @@
+
 table {
     border: 1px solid black;
     width: 900px;
@@ -9,16 +10,18 @@ table {
     width: 30px;
 }
 
-.xLegend{
+.xLegend {
     height: 10px;
     width: auto;
     text-align: center;
+    vertical-align: middle;
 }
 
-.yLegend{
+.yLegend {
     width: 10px;
     height: auto;
     text-align: center;
+    vertical-align: middle;
 }
 
 .dark {
@@ -27,4 +30,17 @@ table {
 
 .light {
     background-color: white;
+}
+
+.whitePieces .blackPieces {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.piece {
+    float: left;
+    font-size: 100pt;
+    text-align: center;
 }

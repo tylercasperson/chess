@@ -5,15 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chess</title>
     <link rel="stylesheet" type="text/css" href="./assets/css/reset.css" />
-    <link rel="stylesheet" type="text/css" href="./assets/css/style.css?" />
+    <link rel="stylesheet" type="text/css" href="./assets/css/style.css" />
 </head>
 <body>
+    <?php
+        $whiteKing = "<div id='whiteKing' class='piece'>&#x2654;</div>";
+        $whiteQueen = "<div id='whiteQueen' class='piece'>&#x2655;</div>";
+        $whiteRook = "<div id='whiteRook' class='piece'>&#x2656;</div>";
+        $whiteBishop = "<div id='whiteBishop' class='piece'>&#x2657;</div>";
+        $whiteKnight = "<div id='whiteKnight' class='piece'>&#x2658;</div>";
+        $whitePawn = "<div id='whitePawn' class='piece'>&#x2659;</div>";
+
+        $blackKing = "<div id='blackKing' class='piece'>&#x265A;</div>";
+        $blackQueen = "<div id='blackQueen' class='piece'>&#x265B;</div>";
+        $blackRook = "<div id='blackRook' class='piece'>&#x265C;</div>";
+        $blackBishop = "<div id='blackBishop' class='piece'>&#x265D;</div>";
+        $blackKnight = "<div id='blackKnight' class='piece'>&#x265E;</div>";
+        $blackPawn = "<div id='blackPawn' class='piece'>&#x265F;</div>";
+
+        echo "<div whitePieces>" . $whiteKing . $whiteQueen . $whiteRook . $whiteBishop . $whiteKnight . $whitePawn . "</div>";
+        echo "<div blackPieces>" . $blackKing . $blackQueen . $blackRook . $blackBishop . $blackKnight . $blackPawn . "</div>";
+    ?>
+
     <table>
         <tbody>
         <?php
             $xAxis = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
             $yAxis = array('8', '7', '6', '5', '4', '3', '2', '1');
-          
+
             echo "<tr>";
             for($x=0;$x<8;$x++){
                 if($x==0){
