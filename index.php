@@ -9,22 +9,24 @@
 </head>
 <body>
     <?php
-        $whiteKing = "<div id='whiteKing' class='piece'>&#x2654;</div>";
-        $whiteQueen = "<div id='whiteQueen' class='piece'>&#x2655;</div>";
-        $whiteRook = "<div id='whiteRook' class='piece'>&#x2656;</div>";
-        $whiteBishop = "<div id='whiteBishop' class='piece'>&#x2657;</div>";
-        $whiteKnight = "<div id='whiteKnight' class='piece'>&#x2658;</div>";
-        $whitePawn = "<div id='whitePawn' class='piece'>&#x2659;</div>";
+        $whiteKing = "<div id='whiteKing' class='piece' draggable='true' ondragstart='$drag'>&#x2654;</div>";
+        $whiteQueen = "<div id='whiteQueen' class='piece' draggable='true' ondragstart='$drag'>&#x2655;</div>";
+        $whiteRook = "<div id='whiteRook' class='piece' draggable='true' ondragstart='$drag'>&#x2656;</div>";
+        $whiteBishop = "<div id='whiteBishop' class='piece' draggable='true' ondragstart='$drag'>&#x2657;</div>";
+        $whiteKnight = "<div id='whiteKnight' class='piece' draggable='true' ondragstart='$drag'>&#x2658;</div>";
+        $whitePawn = "<div id='whitePawn' class='piece' draggable='true' ondragstart='$drag'>&#x2659;</div>";
 
-        $blackKing = "<div id='blackKing' class='piece'>&#x265A;</div>";
-        $blackQueen = "<div id='blackQueen' class='piece'>&#x265B;</div>";
-        $blackRook = "<div id='blackRook' class='piece'>&#x265C;</div>";
-        $blackBishop = "<div id='blackBishop' class='piece'>&#x265D;</div>";
-        $blackKnight = "<div id='blackKnight' class='piece'>&#x265E;</div>";
-        $blackPawn = "<div id='blackPawn' class='piece'>&#x265F;</div>";
+        $blackKing = "<div id='blackKing' class='piece' draggable='true' ondragstart='$drag'>&#x265A;</div>";
+        $blackQueen = "<div id='blackQueen' class='piece' draggable='true' ondragstart='$drag'>&#x265B;</div>";
+        $blackRook = "<div id='blackRook' class='piece' draggable='true' ondragstart='$drag'>&#x265C;</div>";
+        $blackBishop = "<div id='blackBishop' class='piece' draggable='true' ondragstart='$drag'>&#x265D;</div>";
+        $blackKnight = "<div id='blackKnight' class='piece' draggable='true' ondragstart='$drag'>&#x265E;</div>";
+        $blackPawn = "<div id='blackPawn' class='piece' draggable='true' ondragstart='$drag'>&#x265F;</div>";
 
         echo "<div whitePieces>" . $whiteKing . $whiteQueen . $whiteRook . $whiteBishop . $whiteKnight . $whitePawn . "</div>";
         echo "<div blackPieces>" . $blackKing . $blackQueen . $blackRook . $blackBishop . $blackKnight . $blackPawn . "</div>";
+
+
     ?>
 
     <table>
@@ -59,5 +61,10 @@
         ?>
         </tbody>
     </table>
+    <?php
+        $drag = new Func("drag", function($event = null) {
+            call_method(get($event, "dataTransfer"), "setData", "text", get(get($event, "target"), "id"));
+            });  
+    ?>
 </body>
 </html>
