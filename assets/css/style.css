@@ -20,8 +20,8 @@ table {
 }
 
 .cell {
-    height: 8vh;
-    width: 8vh;
+    height: 9vh;
+    width: 9vh;
     text-align: center;
     white-space: nowrap;
 }
@@ -34,7 +34,7 @@ table {
     background: white;
 }
 
-.whitePieces .blackPieces {
+.whitePieces, .blackPieces {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -43,9 +43,18 @@ table {
 
 .piece {
     display: inline-block;
-    font-size: 60pt;
+    color: darkslategrey;
     text-align: center;
-    vertical-align: middle;
-    background: whitesmoke;
-    height: 70%;
+}
+
+.king, .queen {
+    font-size: 60pt;
+}
+
+.rook, .bishop, .knight {
+    font-size: 45pt;
+}
+
+.pawn {
+    font-size: 40pt;
 }

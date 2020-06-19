@@ -9,22 +9,22 @@
 </head>
 <body>
     <?php
-        $whiteKing = "<div id='whiteKing' class='piece' draggable='true' ondragstart='drag(event)'>&#x2654;</div>";
-        $whiteQueen = "<div id='whiteQueen' class='piece' draggable='true' ondragstart='drag(event)'>&#x2655;</div>";
-        $whiteRook = "<div id='whiteRook' class='piece' draggable='true' ondragstart='drag(event)'>&#x2656;</div>";
-        $whiteBishop = "<div id='whiteBishop' class='piece' draggable='true' ondragstart='drag(event)'>&#x2657;</div>";
-        $whiteKnight = "<div id='whiteKnight' class='piece' draggable='true' ondragstart='drag(event)'>&#x2658;</div>";
-        $whitePawn = "<div id='whitePawn' class='piece' draggable='true' ondragstart='drag(event)'>&#x2659;</div>";
+        $whiteKing = "<div id='whiteKing' class='piece king' draggable='true' ondragstart='drag(event)'>&#x2654;</div>";
+        $whiteQueen = "<div id='whiteQueen' class='piece queen' draggable='true' ondragstart='drag(event)'>&#x2655;</div>";
+        $whiteRook = "<div id='whiteRook' class='piece rook' draggable='true' ondragstart='drag(event)'>&#x2656;</div>";
+        $whiteBishop = "<div id='whiteBishop' class='piece bishop' draggable='true' ondragstart='drag(event)'>&#x2657;</div>";
+        $whiteKnight = "<div id='whiteKnight' class='piece knight' draggable='true' ondragstart='drag(event)'>&#x2658;</div>";
+        $whitePawn = "<div id='whitePawn' class='piece pawn' draggable='true' ondragstart='drag(event)'>&#x2659;</div>";
 
-        $blackKing = "<div id='blackKing' class='piece' draggable='true' ondragstart='drag(event)'>&#x265A;</div>";
-        $blackQueen = "<div id='blackQueen' class='piece' draggable='true' ondragstart='drag(event)'>&#x265B;</div>";
-        $blackRook = "<div id='blackRook' class='piece' draggable='true' ondragstart='drag(event)'>&#x265C;</div>";
-        $blackBishop = "<div id='blackBishop' class='piece' draggable='true' ondragstart='drag(event)'>&#x265D;</div>";
-        $blackKnight = "<div id='blackKnight' class='piece' draggable='true' ondragstart='drag(event)'>&#x265E;</div>";
-        $blackPawn = "<div id='blackPawn' class='piece' draggable='true' ondragstart='drag(event)'>&#x265F;</div>";
-
-        echo "<div whitePieces ondrop='drop(event)' ondragover='allowDrop(event)'>" . $whiteKing . $whiteQueen . $whiteRook . $whiteBishop . $whiteKnight . $whitePawn . "</div>";
-        echo "<div blackPieces ondrop='drop(event)' ondragover='allowDrop(event)'>" . $blackKing . $blackQueen . $blackRook . $blackBishop . $blackKnight . $blackPawn . "</div>";
+        $blackKing = "<div id='blackKing' class='piece king' draggable='true' ondragstart='drag(event)'>&#x265A;</div>";
+        $blackQueen = "<div id='blackQueen' class='piece queen' draggable='true' ondragstart='drag(event)'>&#x265B;</div>";
+        $blackRook = "<div id='blackRook' class='piece rook' draggable='true' ondragstart='drag(event)'>&#x265C;</div>";
+        $blackBishop = "<div id='blackBishop' class='piece bishop' draggable='true' ondragstart='drag(event)'>&#x265D;</div>";
+        $blackKnight = "<div id='blackKnight' class='piece knight' draggable='true' ondragstart='drag(event)'>&#x265E;</div>";
+        $blackPawn = "<div id='blackPawn' class='piece pawn' draggable='true' ondragstart='drag(event)'>&#x265F;</div>";
+        
+        echo "<div whitePieces ondrop='drop(event)' ondragover='allowDrop(event)'>" . $whiteKing . $whiteQueen . $whiteRook . $whiteRook . $whiteBishop . $whiteBishop . $whiteKnight . $whiteKnight . $whitePawn . $whitePawn . $whitePawn . $whitePawn . $whitePawn . $whitePawn . $whitePawn . $whitePawn . "</div>";
+        echo "<div blackPieces ondrop='drop(event)' ondragover='allowDrop(event)'>" . $blackKing . $blackQueen . $blackRook . $blackRook . $blackBishop . $blackBishop . $blackKnight . $blackKnight . $blackPawn . $blackPawn . $blackPawn . $blackPawn . $blackPawn . $blackPawn . $blackPawn . $blackPawn . "</div>";
     ?>
 
     <table>
