@@ -1,27 +1,29 @@
 
 table {
     border: 1px solid black;
-    width: 900px;
-    height: 900px;
-}
-
-.cell {
-    height: 30px;
-    width: 30px;
+    table-layout: fixed;
+    display: flex;
+    width: 64vw;
 }
 
 .xLegend {
-    height: 10px;
+    height: 3vh;
     width: auto;
     text-align: center;
     vertical-align: middle;
 }
 
 .yLegend {
-    width: 10px;
-    height: auto;
+    width: 3vw;
     text-align: center;
     vertical-align: middle;
+}
+
+.cell {
+    height: 8vh;
+    width: 8vh;
+    text-align: center;
+    white-space: nowrap;
 }
 
 .dark {
@@ -29,7 +31,7 @@ table {
 }
 
 .light {
-    background-color: white;
+    background: white;
 }
 
 .whitePieces .blackPieces {
@@ -40,7 +42,10 @@ table {
 }
 
 .piece {
-    float: left;
-    font-size: 100pt;
+    display: inline-block;
+    font-size: 60pt;
     text-align: center;
+    vertical-align: middle;
+    background: whitesmoke;
+    height: 70%;
 }

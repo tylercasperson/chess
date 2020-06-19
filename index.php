@@ -23,8 +23,8 @@
         $blackKnight = "<div id='blackKnight' class='piece' draggable='true' ondragstart='drag(event)'>&#x265E;</div>";
         $blackPawn = "<div id='blackPawn' class='piece' draggable='true' ondragstart='drag(event)'>&#x265F;</div>";
 
-        echo "<div whitePieces>" . $whiteKing . $whiteQueen . $whiteRook . $whiteBishop . $whiteKnight . $whitePawn . "</div>";
-        echo "<div blackPieces>" . $blackKing . $blackQueen . $blackRook . $blackBishop . $blackKnight . $blackPawn . "</div>";
+        echo "<div whitePieces ondrop='drop(event)' ondragover='allowDrop(event)'>" . $whiteKing . $whiteQueen . $whiteRook . $whiteBishop . $whiteKnight . $whitePawn . "</div>";
+        echo "<div blackPieces ondrop='drop(event)' ondragover='allowDrop(event)'>" . $blackKing . $blackQueen . $blackRook . $blackBishop . $blackKnight . $blackPawn . "</div>";
     ?>
 
     <table>
@@ -44,18 +44,26 @@
 
             for($row = 0; $row <= 7; $row++){
                 echo "<tr class='row'>"; 
+                echo "<td class='yLegend'>" . $yAxis[($row)] . "</td>";
                 for($column = 0; $column <= 7; $column++){
-                    if($column == 0){
-                        echo "<td class='yLegend'>" . $yAxis[($row)] . "</td>";
-                    }
                     if(($row + $column) % 2 == 0){
-                        echo "<td id='" . $xAxis[7-$row] . $yAxis[$column] . "' class='cell dark' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
-                    } else {
                         echo "<td id='" . $xAxis[7-$row] . $yAxis[$column] . "' class='cell light' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
+                    } else {
+                        echo "<td id='" . $xAxis[7-$row] . $yAxis[$column] . "' class='cell dark' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
                     }
                 }
+                echo "<td class='yLegend'>" . $yAxis[($row)] . "</td>";
                 echo "</tr>";
             } 
+
+            echo "<tr>";
+            for($x=0;$x<8;$x++){
+                if($x==0){
+                    echo "<td></td>";
+                }
+                echo "<td class='xLegend'>" . $xAxis[$x] . "</td>";
+            }
+            echo "</tr>";
         ?>
         </tbody>
     </table>
