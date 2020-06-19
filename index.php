@@ -9,24 +9,22 @@
 </head>
 <body>
     <?php
-        $whiteKing = "<div id='whiteKing' class='piece' draggable='true' ondragstart='$drag'>&#x2654;</div>";
-        $whiteQueen = "<div id='whiteQueen' class='piece' draggable='true' ondragstart='$drag'>&#x2655;</div>";
-        $whiteRook = "<div id='whiteRook' class='piece' draggable='true' ondragstart='$drag'>&#x2656;</div>";
-        $whiteBishop = "<div id='whiteBishop' class='piece' draggable='true' ondragstart='$drag'>&#x2657;</div>";
-        $whiteKnight = "<div id='whiteKnight' class='piece' draggable='true' ondragstart='$drag'>&#x2658;</div>";
-        $whitePawn = "<div id='whitePawn' class='piece' draggable='true' ondragstart='$drag'>&#x2659;</div>";
+        $whiteKing = "<div id='whiteKing' class='piece' draggable='true' ondragstart='drag(event)'>&#x2654;</div>";
+        $whiteQueen = "<div id='whiteQueen' class='piece' draggable='true' ondragstart='drag(event)'>&#x2655;</div>";
+        $whiteRook = "<div id='whiteRook' class='piece' draggable='true' ondragstart='drag(event)'>&#x2656;</div>";
+        $whiteBishop = "<div id='whiteBishop' class='piece' draggable='true' ondragstart='drag(event)'>&#x2657;</div>";
+        $whiteKnight = "<div id='whiteKnight' class='piece' draggable='true' ondragstart='drag(event)'>&#x2658;</div>";
+        $whitePawn = "<div id='whitePawn' class='piece' draggable='true' ondragstart='drag(event)'>&#x2659;</div>";
 
-        $blackKing = "<div id='blackKing' class='piece' draggable='true' ondragstart='$drag'>&#x265A;</div>";
-        $blackQueen = "<div id='blackQueen' class='piece' draggable='true' ondragstart='$drag'>&#x265B;</div>";
-        $blackRook = "<div id='blackRook' class='piece' draggable='true' ondragstart='$drag'>&#x265C;</div>";
-        $blackBishop = "<div id='blackBishop' class='piece' draggable='true' ondragstart='$drag'>&#x265D;</div>";
-        $blackKnight = "<div id='blackKnight' class='piece' draggable='true' ondragstart='$drag'>&#x265E;</div>";
-        $blackPawn = "<div id='blackPawn' class='piece' draggable='true' ondragstart='$drag'>&#x265F;</div>";
+        $blackKing = "<div id='blackKing' class='piece' draggable='true' ondragstart='drag(event)'>&#x265A;</div>";
+        $blackQueen = "<div id='blackQueen' class='piece' draggable='true' ondragstart='drag(event)'>&#x265B;</div>";
+        $blackRook = "<div id='blackRook' class='piece' draggable='true' ondragstart='drag(event)'>&#x265C;</div>";
+        $blackBishop = "<div id='blackBishop' class='piece' draggable='true' ondragstart='drag(event)'>&#x265D;</div>";
+        $blackKnight = "<div id='blackKnight' class='piece' draggable='true' ondragstart='drag(event)'>&#x265E;</div>";
+        $blackPawn = "<div id='blackPawn' class='piece' draggable='true' ondragstart='drag(event)'>&#x265F;</div>";
 
         echo "<div whitePieces>" . $whiteKing . $whiteQueen . $whiteRook . $whiteBishop . $whiteKnight . $whitePawn . "</div>";
         echo "<div blackPieces>" . $blackKing . $blackQueen . $blackRook . $blackBishop . $blackKnight . $blackPawn . "</div>";
-
-
     ?>
 
     <table>
@@ -51,9 +49,9 @@
                         echo "<td class='yLegend'>" . $yAxis[($row)] . "</td>";
                     }
                     if(($row + $column) % 2 == 0){
-                        echo "<td id='" . $xAxis[7-$row] . $yAxis[$column] . "' class='cell dark'></td>";
+                        echo "<td id='" . $xAxis[7-$row] . $yAxis[$column] . "' class='cell dark' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
                     } else {
-                        echo "<td id='" . $xAxis[7-$row] . $yAxis[$column] . "' class='cell light'></td>";
+                        echo "<td id='" . $xAxis[7-$row] . $yAxis[$column] . "' class='cell light' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
                     }
                 }
                 echo "</tr>";
@@ -61,10 +59,6 @@
         ?>
         </tbody>
     </table>
-    <?php
-        $drag = new Func("drag", function($event = null) {
-            call_method(get($event, "dataTransfer"), "setData", "text", get(get($event, "target"), "id"));
-            });  
-    ?>
+    <script type="text/javascript" src="./assets/javascript/piecesMovement.js"></script>
 </body>
 </html>
