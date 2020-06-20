@@ -49,7 +49,36 @@ piecesMovement = (currentSpot, chessPiece) => {
         let xSpot = xAxis.indexOf(currentSpot.split('')[0]);
         let ySpot = yAxis.indexOf(currentSpot.split('')[1]);
 
+        console.log(currentSpot[1]);
+
         switch(chessPiece) {
+            case 'King':
+                let kingX = [xSpot+1, xSpot-1];
+                let kingY = [ySpot+1, ySpot-1];
+                let possibleMoves = [];
+
+                possibleMoves.push(xAxis[parseInt(xSpot+1)] + currentSpot[1]);
+                possibleMoves.push(xAxis[parseInt(xSpot-1)] + currentSpot[1]);
+                possibleMoves.push(currentSpot[0] + parseInt(+currentSpot[1] + +1));
+                possibleMoves.push(currentSpot[0] + parseInt(+currentSpot[1] - +1));
+
+                for(let i=0;i<kingX.length;i++){
+                    for(let j=0;j<kingY.length;j++){
+                        possibleMoves.push(xAxis[kingX[i]] + yAxis[kingY[j]]);    
+                    }
+                }
+                
+                for(let k=0;k<possibleMoves.length;k++){
+                    if (possibleMoves[k].length == 2){
+                        if (!(possibleMoves[k][1] == 9)){
+                            let thisOne = document.getElementById(possibleMoves[k]).classList;
+                            thisOne.add('allowableMoves');
+                            thisOne.remove('dark');
+                        }
+                    }
+                }
+            break;
+
             case 'Knight':
                 // Need to calculate/limit all of the possible moves a knight can make. 
                 let knightX = [xSpot + 2, xSpot - 2, xSpot + 1, xSpot - 1].filter(function(cellPosition){
@@ -71,6 +100,24 @@ piecesMovement = (currentSpot, chessPiece) => {
                         }
                     }
                 }
+            break;
+
+            case 'Pawn':
+                let pieceX = [xSpot+1, xSpot-1];
+                let pieceY = [ySpot+1, ySpot-1];
+
+                for(let i=0;i<pieceX.length;i++){
+                    for(let j=0;j<pieceY.length;j++){
+                        let possibleMoves = document.getElementById(xAxis[pieceX[i]] + yAxis[pieceY[j]]).classList;
+                            
+                        
+                            possibleMoves.add('allowableMoves');
+                            possibleMoves.remove('dark');
+                            console.log('This piece(' + currentSpot + ') can move to ' + xAxis[pieceX[i]] + yAxis[pieceY[j]] + '.');
+                        
+                    }
+                }
+
             break;
         }
         
