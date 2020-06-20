@@ -103,12 +103,11 @@ piecesMovement = (currentSpot, chessPiece) => {
             break;
 
             case 'Pawn':
-                // let pawnX = [xSpot+1, xSpot-1];
-                // let pawnY = [ySpot+1, ySpot-1];
                 let pawnMoves = [];
 
-                pawnMoves.push(xAxis[parseInt(xSpot+1)] + currentSpot[1]);
-                pawnMoves.push(xAxis[parseInt(xSpot-1)] + currentSpot[1]);
+                pawnMoves.push(xAxis[xSpot] + parseInt(+(yAxis[ySpot]) + +1));
+                pawnMoves.push(xAxis[xSpot] + parseInt((yAxis[ySpot])-1));
+                console.log(pawnMoves);
                 
                 for(let k=0;k<pawnMoves.length;k++){
                     if (pawnMoves[k].length == 2){
