@@ -9,8 +9,8 @@
 </head>
 <body>
     <?php
-        $whiteKing = "<div id='whiteKing1' class='piece king' draggable='true' ondragstart='drag(event)'>&#x2654;</div>";
-        $whiteQueen = "<div id='whiteQueen1' class='piece queen' draggable='true' ondragstart='drag(event)'>&#x2655;</div>";
+        $whiteKing1 = "<div id='whiteKing1' class='piece king' draggable='true' ondragstart='drag(event)'>&#x2654;</div>";
+        $whiteQueen1 = "<div id='whiteQueen1' class='piece queen' draggable='true' ondragstart='drag(event)'>&#x2655;</div>";
         $whiteRook1 = "<div id='whiteRook1' class='piece rook' draggable='true' ondragstart='drag(event)'>&#x2656;</div>";
         $whiteRook2 = "<div id='whiteRook2' class='piece rook' draggable='true' ondragstart='drag(event)'>&#x2656;</div>";
         $whiteBishop1 = "<div id='whiteBishop1' class='piece bishop' draggable='true' ondragstart='drag(event)'>&#x2657;</div>";
@@ -26,8 +26,8 @@
         $whitePawn7 = "<div id='whitePawn7' class='piece pawn' draggable='true' ondragstart='drag(event)'>&#x2659;</div>";
         $whitePawn8 = "<div id='whitePawn8' class='piece pawn' draggable='true' ondragstart='drag(event)'>&#x2659;</div>";
 
-        $blackKing = "<div id='blackKing1' class='piece king' draggable='true' ondragstart='drag(event)'>&#x265A;</div>";
-        $blackQueen = "<div id='blackQueen1' class='piece queen' draggable='true' ondragstart='drag(event)'>&#x265B;</div>";
+        $blackKing1 = "<div id='blackKing1' class='piece king' draggable='true' ondragstart='drag(event)'>&#x265A;</div>";
+        $blackQueen1 = "<div id='blackQueen1' class='piece queen' draggable='true' ondragstart='drag(event)'>&#x265B;</div>";
         $blackRook1 = "<div id='blackRook1' class='piece rook' draggable='true' ondragstart='drag(event)'>&#x265C;</div>";
         $blackRook2 = "<div id='blackRook2' class='piece rook' draggable='true' ondragstart='drag(event)'>&#x265C;</div>";
         $blackBishop1 = "<div id='blackBishop1' class='piece bishop' draggable='true' ondragstart='drag(event)'>&#x265D;</div>";
@@ -44,8 +44,8 @@
         $blackPawn8 = "<div id='blackPawn8' class='piece pawn' draggable='true' ondragstart='drag(event)'>&#x265F;</div>";
 
 
-        echo "<div whitePieces ondrop='drop(event)' ondragover='allowDrop(event)'>" . $whiteKing . $whiteQueen . $whiteRook1 . $whiteRook2 . $whiteBishop1 . $whiteBishop2 . $whiteKnight1 . $whiteKnight2 . $whitePawn1 . $whitePawn2 . $whitePawn3 . $whitePawn4 . $whitePawn5 . $whitePawn6 . $whitePawn7 . $whitePawn8 . "</div>";
-        echo "<div blackPieces ondrop='drop(event)' ondragover='allowDrop(event)'>" . $blackKing . $blackQueen . $blackRook1 . $blackRook2 . $blackBishop1 . $blackBishop2 . $blackKnight1 . $blackKnight2 . $blackPawn1 . $blackPawn2 . $blackPawn3 . $blackPawn4 . $blackPawn5 . $blackPawn6 . $blackPawn7 . $blackPawn8 . "</div>";
+        echo "<div id='whitePieces' ondrop='drop(event)' ondragover='allowDrop(event)'>" . $whiteKing1 . $whiteQueen1 . $whiteRook1 . $whiteRook2 . $whiteBishop1 . $whiteBishop2 . $whiteKnight1 . $whiteKnight2 . $whitePawn1 . $whitePawn2 . $whitePawn3 . $whitePawn4 . $whitePawn5 . $whitePawn6 . $whitePawn7 . $whitePawn8 . "</div>";
+        echo "<div id='blackPieces' ondrop='drop(event)' ondragover='allowDrop(event)'>" . $blackKing1 . $blackQueen1 . $blackRook1 . $blackRook2 . $blackBishop1 . $blackBishop2 . $blackKnight1 . $blackKnight2 . $blackPawn1 . $blackPawn2 . $blackPawn3 . $blackPawn4 . $blackPawn5 . $blackPawn6 . $blackPawn7 . $blackPawn8 . "</div>";
     ?>
 
     <table>
@@ -68,9 +68,9 @@
                 echo "<td class='yLegend'>" . $yAxis[(7-$row)] . "</td>";
                 for($column = 0; $column <= 7; $column++){
                     if(($row + $column) % 2 == 0){
-                        echo "<td id='" . $xAxis[$column] . $yAxis[7-$row] . "' class='cell light' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
+                        echo "<td id='" . $xAxis[$column] . $yAxis[7-$row] . "' class='cell light lt' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
                     } else {
-                        echo "<td id='" . $xAxis[$column] . $yAxis[7-$row] . "' class='cell dark' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
+                        echo "<td id='" . $xAxis[$column] . $yAxis[7-$row] . "' class='cell dark dk' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
                     }
                 }
                 echo "<td class='yLegend'>" . $yAxis[(7-$row)] . "</td>";

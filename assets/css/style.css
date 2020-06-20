@@ -34,6 +34,10 @@ table {
     background: white;
 }
 
+.allowableMoves {
+    background: green;
+}
+
 .whitePieces, .blackPieces {
     display: flex;
     flex-direction: row;
