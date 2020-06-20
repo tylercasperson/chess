@@ -3,6 +3,20 @@
 const xAxis = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
 const yAxis = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
+function drag(e) {
+    e.dataTransfer.setData("text", e.target.id);
+
+    let offBoard = document.getElementById(e.target.id).parentNode.id;
+    console.log(offBoard == 'blackPieces' || offBoard == 'whitePieces');
+
+    if (!(offBoard == 'blackPieces' || offBoard == 'whitePieces')) {
+        let currentSpot = document.getElementById(e.target.id).parentNode.id;
+        let chessPiece = e.target.id.slice(5,-1);
+        piecesMovement(currentSpot, chessPiece);
+    }
+    console.log(e.target.id.slice(5,-1));
+}
+
 //Drag and drop functions
 allowDrop = (e) => e.preventDefault();
 
@@ -29,20 +43,6 @@ drop = (e) => {
     }    
 }
 
-drag = (e) => {
-    e.dataTransfer.setData("text", e.target.id);
-
-    let offBoard = document.getElementById(e.target.id).parentNode.id;
-    console.log(offBoard == 'blackPieces' || offBoard == 'whitePieces');
-
-    if (!(offBoard == 'blackPieces' || offBoard == 'whitePieces')) {
-        let currentSpot = document.getElementById(e.target.id).parentNode.id;
-        let chessPiece = e.target.id.slice(5,-1);
-        piecesMovement(currentSpot, chessPiece);
-    }
-    console.log(e.target.id.slice(5,-1));
-}
-
 piecesMovement = (currentSpot, chessPiece) => {
 
         //Translates the current knight's position to integers in the arrays being used in the function.
@@ -55,23 +55,23 @@ piecesMovement = (currentSpot, chessPiece) => {
             case 'King':
                 let kingX = [xSpot+1, xSpot-1];
                 let kingY = [ySpot+1, ySpot-1];
-                let possibleMoves = [];
+                let kingMoves = [];
 
-                possibleMoves.push(xAxis[parseInt(xSpot+1)] + currentSpot[1]);
-                possibleMoves.push(xAxis[parseInt(xSpot-1)] + currentSpot[1]);
-                possibleMoves.push(currentSpot[0] + parseInt(+currentSpot[1] + +1));
-                possibleMoves.push(currentSpot[0] + parseInt(+currentSpot[1] - +1));
+                kingMoves.push(xAxis[parseInt(xSpot+1)] + currentSpot[1]);
+                kingMoves.push(xAxis[parseInt(xSpot-1)] + currentSpot[1]);
+                kingMoves.push(currentSpot[0] + parseInt(+currentSpot[1] + +1));
+                kingMoves.push(currentSpot[0] + parseInt(+currentSpot[1] - +1));
 
                 for(let i=0;i<kingX.length;i++){
                     for(let j=0;j<kingY.length;j++){
-                        possibleMoves.push(xAxis[kingX[i]] + yAxis[kingY[j]]);    
+                        kingMoves.push(xAxis[kingX[i]] + yAxis[kingY[j]]);    
                     }
                 }
                 
-                for(let k=0;k<possibleMoves.length;k++){
-                    if (possibleMoves[k].length == 2){
-                        if (!(possibleMoves[k][1] == 9)){
-                            let thisOne = document.getElementById(possibleMoves[k]).classList;
+                for(let k=0;k<kingMoves.length;k++){
+                    if (kingMoves[k].length == 2){
+                        if (!(kingMoves[k][1] == 9)){
+                            let thisOne = document.getElementById(kingMoves[k]).classList;
                             thisOne.add('allowableMoves');
                             thisOne.remove('dark');
                         }
@@ -91,11 +91,11 @@ piecesMovement = (currentSpot, chessPiece) => {
                 //Combines the x and y possibilities for the knights moves. This step further limits the knight moving 3 total spaces. Two squares in one direction and one square in a perpendicular direction aka an L shape. 
                 for (let i = 0; i < knightX.length; i++) {
                     for (let j = 0; j < knightY.length; j++) {  
-                        let possibleMoves = document.getElementById(xAxis[knightX[i]] + yAxis[knightY[j]]).classList;
+                        let knightMoves = document.getElementById(xAxis[knightX[i]] + yAxis[knightY[j]]).classList;
                             
                         if ((Math.abs(xSpot - knightX[i]) + Math.abs(ySpot - knightY[j])) === 3){
-                            possibleMoves.add('allowableMoves');
-                            possibleMoves.remove('dark');
+                            knightMoves.add('allowableMoves');
+                            knightMoves.remove('dark');
                             console.log('This knight(' + currentSpot + ') can move to ' + xAxis[knightX[i]] + yAxis[knightY[j]] + '.');
                         }
                     }
@@ -103,21 +103,22 @@ piecesMovement = (currentSpot, chessPiece) => {
             break;
 
             case 'Pawn':
-                let pieceX = [xSpot+1, xSpot-1];
-                let pieceY = [ySpot+1, ySpot-1];
+                // let pawnX = [xSpot+1, xSpot-1];
+                // let pawnY = [ySpot+1, ySpot-1];
+                let pawnMoves = [];
 
-                for(let i=0;i<pieceX.length;i++){
-                    for(let j=0;j<pieceY.length;j++){
-                        let possibleMoves = document.getElementById(xAxis[pieceX[i]] + yAxis[pieceY[j]]).classList;
-                            
-                        
-                            possibleMoves.add('allowableMoves');
-                            possibleMoves.remove('dark');
-                            console.log('This piece(' + currentSpot + ') can move to ' + xAxis[pieceX[i]] + yAxis[pieceY[j]] + '.');
-                        
+                pawnMoves.push(xAxis[parseInt(xSpot+1)] + currentSpot[1]);
+                pawnMoves.push(xAxis[parseInt(xSpot-1)] + currentSpot[1]);
+                
+                for(let k=0;k<pawnMoves.length;k++){
+                    if (pawnMoves[k].length == 2){
+                        if (!(pawnMoves[k][1] == 9)){
+                            let thisOne = document.getElementById(pawnMoves[k]).classList;
+                            thisOne.add('allowableMoves');
+                            thisOne.remove('dark');
+                        }
                     }
                 }
-
             break;
         }
         
