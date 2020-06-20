@@ -99,6 +99,23 @@ piecesMovement = (currentSpot, chessPiece) => {
                 }
             break;
 
+            case 'Bishop':            
+                let bishopMoves = [];
+
+                for(let i=0;i<xAxis.length;i++){
+                    if ((xAxis[(xSpot+i)] + yAxis[(ySpot+i)]).length === 2) bishopMoves.push(xAxis[(xSpot+i)] + yAxis[(ySpot+i)]);
+                    if ((xAxis[(xSpot-i)] + yAxis[(ySpot-i)]).length === 2) bishopMoves.push(xAxis[(xSpot-i)] + yAxis[(ySpot-i)]);
+                    if ((xAxis[(xSpot+i)] + yAxis[(ySpot-i)]).length === 2) bishopMoves.push(xAxis[(xSpot+i)] + yAxis[(ySpot-i)]);
+                    if ((xAxis[(xSpot-i)] + yAxis[(ySpot+i)]).length === 2) bishopMoves.push(xAxis[(xSpot-i)] + yAxis[(ySpot+i)]);
+                }
+
+                for(let j=0;j<bishopMoves.length;j++){
+                    let bishopPossibilities = document.getElementById(bishopMoves[j]).classList;
+                    bishopPossibilities.add('allowableMoves');
+                    bishopPossibilities.remove('dark');
+                }
+            break;
+
             case 'Knight':
                 // Need to calculate/limit all of the possible moves a knight can make. 
                 let knightX = [xSpot + 2, xSpot - 2, xSpot + 1, xSpot - 1].filter(function(cellPosition){
