@@ -43,6 +43,7 @@ drop = (e) => {
     }    
 }
 
+
 piecesMovement = (currentSpot, chessPiece) => {
 
         //Translates the current knight's position to integers in the arrays being used in the function.
@@ -50,6 +51,10 @@ piecesMovement = (currentSpot, chessPiece) => {
         let ySpot = yAxis.indexOf(currentSpot.split('')[1]);
 
         console.log(currentSpot[1]);
+
+        removeDuplicates = (data) => {
+            return data.filter((currentSpot, index) => data.indexOf(currentSpot) === index);
+        }
 
         switch(chessPiece) {
             case 'King':
@@ -76,6 +81,21 @@ piecesMovement = (currentSpot, chessPiece) => {
                             thisOne.remove('dark');
                         }
                     }
+                }
+            break;
+
+            case 'Rook':
+                let rookMoves = [];
+
+                for (let i=0;i<xAxis.length;i++){
+                    if( !(xAxis[i]+currentSpot[1] === currentSpot)) rookMoves.push(xAxis[i]+currentSpot[1]);
+                    if( !(currentSpot[0]+yAxis[i] === currentSpot)) rookMoves.push(currentSpot[0]+yAxis[i]);
+                }
+
+                for (let j=0;j<rookMoves.length;j++){
+                    let thisOne = document.getElementById(rookMoves[j]).classList;
+                    thisOne.add('allowableMoves');
+                    thisOne.remove('dark');
                 }
             break;
 
