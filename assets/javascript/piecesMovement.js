@@ -84,6 +84,26 @@ piecesMovement = (currentSpot, chessPiece) => {
                 }
             break;
 
+            case 'Queen':
+                let queenMoves = [];
+
+                for(let i=0;i<xAxis.length;i++){
+                    if ((xAxis[(xSpot+i)] + yAxis[(ySpot+i)]).length === 2) queenMoves.push(xAxis[(xSpot+i)] + yAxis[(ySpot+i)]);
+                    if ((xAxis[(xSpot-i)] + yAxis[(ySpot-i)]).length === 2) queenMoves.push(xAxis[(xSpot-i)] + yAxis[(ySpot-i)]);
+                    if ((xAxis[(xSpot+i)] + yAxis[(ySpot-i)]).length === 2) queenMoves.push(xAxis[(xSpot+i)] + yAxis[(ySpot-i)]);
+                    if ((xAxis[(xSpot-i)] + yAxis[(ySpot+i)]).length === 2) queenMoves.push(xAxis[(xSpot-i)] + yAxis[(ySpot+i)]);
+
+                    if( !(xAxis[i]+currentSpot[1] === currentSpot)) queenMoves.push(xAxis[i]+currentSpot[1]);
+                    if( !(currentSpot[0]+yAxis[i] === currentSpot)) queenMoves.push(currentSpot[0]+yAxis[i]);
+                }
+
+                for(let j=0;j<queenMoves.length;j++){
+                    let queenPossibilities = document.getElementById(queenMoves[j]).classList;
+                    queenPossibilities.add('allowableMoves');
+                    queenPossibilities.remove('dark');
+                }
+            break;
+
             case 'Rook':
                 let rookMoves = [];
 
