@@ -1,31 +1,23 @@
 
-
-function drag(e) {
+drag = (e) => {
     e.dataTransfer.setData("text", e.target.id);
 
     let offBoard = document.getElementById(e.target.id).parentNode.id;
 
     if (!(offBoard == 'blackPieces' || offBoard == 'whitePieces')) {
-        let currentSpot = document.getElementById(e.target.id).parentNode.id;
+        let currentCell = document.getElementById(e.target.id).parentNode.id;
         let chessPiece = e.target.id.slice(5,-1);
-        piecesMovement(currentSpot, chessPiece);
+        piecesMovement(currentCell, chessPiece);
     }
     console.log(e.target.id.slice(5,-1));
 }
 
-//Drag and drop functions
 allowDrop = (e) => e.preventDefault();
-
-goAway = (e) => {
-    e.preventDefault();
-    document.getElementById('whitePieces').append(e.target);
-    console.log(e.target.id.parentNode);
-}
 
 drop = (e) => {
     e.preventDefault();
     let data = e.dataTransfer.getData('text');
-    let currentSpot = document.getElementById(e.target.id).id;
+    let currentSquare = document.getElementById(e.target.id).id;
 
     removeHighlights = () => {
         let allowableMoves = document.getElementsByClassName('allowableMoves');        
@@ -42,7 +34,7 @@ drop = (e) => {
         }  
     }
 
-    if (document.getElementById(currentSpot).innerText == ''){
+    if (document.getElementById(currentSquare).innerText == ''){
         if(e.target.classList.contains('piece')) {
             return;
         } else {
@@ -50,7 +42,7 @@ drop = (e) => {
             removeHighlights();
         }
     } else {
-        let battleCell = document.getElementById(document.getElementById(currentSpot).id);
+        let battleCell = document.getElementById(document.getElementById(currentSquare).id);
         document.getElementById(document.getElementById(battleCell.id).parentNode.id).append(document.getElementById(data));
         document.getElementById(battleCell.id.slice(0,5)+'Pieces').append(battleCell);
         removeHighlights();
@@ -71,15 +63,15 @@ piecesMovement = (currentSpot, chessPiece) => {
             let kingX = [xSpot+1, xSpot-1];
             let kingY = [ySpot+1, ySpot-1];
             let kingMoves = [];
-
-            kingMoves.push(xAxis[parseInt(xSpot+1)] + currentSpot[1]);
-            kingMoves.push(xAxis[parseInt(xSpot-1)] + currentSpot[1]);
-            kingMoves.push(currentSpot[0] + parseInt(+currentSpot[1] + +1));
-            kingMoves.push(currentSpot[0] + parseInt(+currentSpot[1] - +1));
+ 
+            if((xAxis[parseInt(xSpot+1)] + currentSpot[1]).length == 2) kingMoves.push(xAxis[parseInt(xSpot+1)] + currentSpot[1]);
+            if((xAxis[parseInt(xSpot-1)] + currentSpot[1]).length == 2) kingMoves.push(xAxis[parseInt(xSpot-1)] + currentSpot[1]);
+            if((currentSpot[0] + parseInt(+currentSpot[1] + 1)).length == 2 && !(parseInt(+currentSpot[1] + 1) == 9)) kingMoves.push(currentSpot[0] + parseInt(+currentSpot[1] + +1));
+            if((currentSpot[0] + parseInt(+currentSpot[1] - 1)).length == 2 && !(parseInt(+currentSpot[1] - 1)) == 0) kingMoves.push(currentSpot[0] + parseInt(+currentSpot[1] - +1));
 
             for(let i=0;i<kingX.length;i++){
                 for(let j=0;j<kingY.length;j++){
-                    kingMoves.push(xAxis[kingX[i]] + yAxis[kingY[j]]);    
+                    if((xAxis[kingX[i]] + yAxis[kingY[j]]).length == 2) kingMoves.push(xAxis[kingX[i]] + yAxis[kingY[j]]);    
                 }
             }
             
@@ -147,6 +139,8 @@ piecesMovement = (currentSpot, chessPiece) => {
         break;
 
         case 'Knight':
+            let knightMoves = [];
+
             // Need to calculate/limit all of the possible moves a knight can make. 
             let knightX = [xSpot + 2, xSpot - 2, xSpot + 1, xSpot - 1].filter(function(cellPosition){
                 return (cellPosition > -1 && cellPosition < 8);
@@ -158,24 +152,23 @@ piecesMovement = (currentSpot, chessPiece) => {
             //Combines the x and y possibilities for the knights moves. This step further limits the knight moving 3 total spaces. Two squares in one direction and one square in a perpendicular direction aka an L shape. 
             for (let i = 0; i < knightX.length; i++) {
                 for (let j = 0; j < knightY.length; j++) {  
-                    let knightMoves = document.getElementById(xAxis[knightX[i]] + yAxis[knightY[j]]).classList;
+                    let knightPossibilities = document.getElementById(xAxis[knightX[i]] + yAxis[knightY[j]]).classList;
                         
                     if ((Math.abs(xSpot - knightX[i]) + Math.abs(ySpot - knightY[j])) === 3){
-                        knightMoves.add('allowableMoves');
-                        knightMoves.remove('dark');
-                        console.log('This knight(' + currentSpot + ') can move to ' + xAxis[knightX[i]] + yAxis[knightY[j]] + '.');
+                        knightPossibilities.add('allowableMoves');
+                        knightPossibilities.remove('dark');
+                        knightMoves.push(xAxis[knightX[i]] + yAxis[knightY[j]]);
                     }
                 }
-            }
+            } 
         break;
 
         case 'Pawn':
             let pawnMoves = [];
 
-            pawnMoves.push(xAxis[xSpot] + parseInt(+(yAxis[ySpot]) + +1));
-            pawnMoves.push(xAxis[xSpot] + parseInt((yAxis[ySpot])-1));
-            console.log(pawnMoves);
-            
+            if((xAxis[xSpot] + (parseInt(yAxis[ySpot])+1)).length == 2 && !(parseInt(yAxis[ySpot])+1 == 9)) pawnMoves.push(xAxis[xSpot] + parseInt(+(yAxis[ySpot]) + +1));
+            if( (xAxis[xSpot] + parseInt((yAxis[ySpot])-1)).length == 2 && !(parseInt((yAxis[ySpot])-1)) == 0) pawnMoves.push(xAxis[xSpot] + parseInt((yAxis[ySpot])-1));
+
             for(let k=0;k<pawnMoves.length;k++){
                 if (pawnMoves[k].length == 2){
                     if (!(pawnMoves[k][1] == 9)){

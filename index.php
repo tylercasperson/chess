@@ -11,8 +11,8 @@
 <body>
 <script type="text/javascript" src="./assets/javascript/piecesMovement.js"></script>
     <?php
-        $whiteKing1 = "<div id='whiteKing1' class='piece king' draggable='true' ondrop=\"goAway(event)\" ondragstart=\"drag(event)\">&#x2654;</div>";
-        $whiteQueen1 = "<div id='whiteQueen1' class='piece queen' draggable='true' ondrop=\"goAway(event)\" ondragstart=\"drag(event)\">&#x2655;</div>";
+        $whiteKing1 = "<div id='whiteKing1' class='piece king' draggable='true' ondragstart=\"drag(event)\">&#x2654;</div>";
+        $whiteQueen1 = "<div id='whiteQueen1' class='piece queen' draggable='true' ondragstart=\"drag(event)\">&#x2655;</div>";
         $whiteRook1 = "<div id='whiteRook1' class='piece rook' draggable='true' ondragstart=\"drag(event)\">&#x2656;</div>";
         $whiteRook2 = "<div id='whiteRook2' class='piece rook' draggable='true' ondragstart=\"drag(event)\">&#x2656;</div>";
         $whiteBishop1 = "<div id='whiteBishop1' class='piece bishop' draggable='true' ondragstart=\"drag(event)\">&#x2657;</div>";
