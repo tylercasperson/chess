@@ -16,14 +16,18 @@ function drag(e) {
 //Drag and drop functions
 allowDrop = (e) => e.preventDefault();
 
+goAway = (e) => {
+    e.preventDefault();
+    document.getElementById('whitePieces').append(e.target);
+    console.log(e.target.id.parentNode);
+}
+
 drop = (e) => {
     e.preventDefault();
-    var data = e.dataTransfer.getData('text');
-    if(e.target.classList.contains('piece')) {
-        return;
-    } else {
-        e.target.appendChild(document.getElementById(data));
-    
+    let data = e.dataTransfer.getData('text');
+    let currentSpot = document.getElementById(e.target.id).id;
+
+    removeHighlights = () => {
         let allowableMoves = document.getElementsByClassName('allowableMoves');        
         let highlightedCells = [];
 
@@ -35,8 +39,22 @@ drop = (e) => {
             let highlightedMoves = document.getElementById(highlightedCells[j]);
             highlightedMoves.classList.remove('allowableMoves');
             if(highlightedMoves.classList.contains('dk')) highlightedMoves.classList.add('dark');
-        }        
-    }    
+        }  
+    }
+
+    if (document.getElementById(currentSpot).innerText == ''){
+        if(e.target.classList.contains('piece')) {
+            return;
+        } else {
+            e.target.appendChild(document.getElementById(data));
+            removeHighlights();
+        }
+    } else {
+        let battleCell = document.getElementById(document.getElementById(currentSpot).id);
+        document.getElementById(document.getElementById(battleCell.id).parentNode.id).append(document.getElementById(data));
+        document.getElementById(battleCell.id.slice(0,5)+'Pieces').append(battleCell);
+        removeHighlights();
+    }
 }
 
 piecesMovement = (currentSpot, chessPiece) => {
