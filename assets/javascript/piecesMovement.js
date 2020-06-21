@@ -43,9 +43,19 @@ drop = (e) => {
         }
     } else {
         let battleCell = document.getElementById(document.getElementById(currentSquare).id);
-        document.getElementById(document.getElementById(battleCell.id).parentNode.id).append(document.getElementById(data));
-        document.getElementById(battleCell.id.slice(0,5)+'Pieces').append(battleCell);
-        removeHighlights();
+        
+        if(!(currentSquare == battleCell.id || document.getElementById(currentSquare).parentNode.id == battleCell.id)) {
+            return;
+        } else {
+            if ( document.getElementById(document.getElementById(battleCell.id).parentNode.id) == null) {
+                document.getElementById(currentSquare).append(document.getElementById(data));
+                document.getElementById(document.getElementById(currentSquare).childNodes[0].id.slice(0,5)+'Pieces').append(battleCell.childNodes[0]);
+            } else {
+                document.getElementById(document.getElementById(battleCell.id).parentNode.id).append(document.getElementById(data));
+                document.getElementById(battleCell.id.slice(0,5)+'Pieces').append(battleCell);
+            }
+            removeHighlights();
+        }
     }
 }
 
