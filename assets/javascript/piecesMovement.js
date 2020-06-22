@@ -198,27 +198,43 @@ piecesMovement = (currentSpot, chessPiece) => {
             if((xAxis[xSpot] + (parseInt(yAxis[ySpot])+1)).length == 2 && !(parseInt(yAxis[ySpot])+1 == 9)) pawnMoves.push(xAxis[xSpot] + parseInt(+(yAxis[ySpot]) + +1));
             if( (xAxis[xSpot] + parseInt((yAxis[ySpot])-1)).length == 2 && !(parseInt((yAxis[ySpot])-1)) == 0) pawnMoves.push(xAxis[xSpot] + parseInt((yAxis[ySpot])-1));
 
-            //add diagnal if a piece is there and two forward if the first move
-
             let movingPawn = document.getElementById(document.getElementById(currentSpot).childNodes[0].id); 
 
+            //A pawn can move two squares forward on the first move
             if(movingPawn.classList.contains('first')){
-                if((xAxis[xSpot] + (parseInt(yAxis[ySpot])+1)).length == 2){
-                    if(!(parseInt(yAxis[ySpot])+2 == 9)){
-                        if(currentSpot[1] === 2 || currentSpot[1] === 7){
-                            pawnMoves.push(xAxis[xSpot] + parseInt(+(yAxis[ySpot]) + 2))
-                        }
-                    }
+                if(currentSpot[1] == 2 || currentSpot[1] == 7){
+                    if((xAxis[xSpot] + (parseInt(yAxis[ySpot])+1)).length == 2 && !(parseInt(yAxis[ySpot])+2 == 9)) pawnMoves.push(xAxis[xSpot] + parseInt(+(yAxis[ySpot]) + 2));
+                    if( (xAxis[xSpot] + parseInt((yAxis[ySpot])-1)).length == 2 && !(parseInt((yAxis[ySpot])-2)) == 0) pawnMoves.push(xAxis[xSpot] + parseInt(+(yAxis[ySpot]) - 2));
+                    movingPawn.classList.remove('first');
                 }
-                if( (xAxis[xSpot] + parseInt((yAxis[ySpot])-1)).length == 2){
-                    if(!(parseInt((yAxis[ySpot])-2)) == 0){
-                        if(currentSpot[1] === 2 || currentSpot[1] === 7){
-                            pawnMoves.push(xAxis[xSpot] + parseInt(+(yAxis[ySpot]) - 2))
-                        }
-                    }
-                }
-                movingPawn.classList.remove('first');
             }
+
+            let northEast = document.getElementById(xAxis[xAxis.indexOf(currentSpot[0])+1] + yAxis[yAxis.indexOf(currentSpot[1])+1]);
+            let northWest = document.getElementById(xAxis[xAxis.indexOf(currentSpot[0])-1] + yAxis[yAxis.indexOf(currentSpot[1])+1]);
+            let southEast = document.getElementById(xAxis[xAxis.indexOf(currentSpot[0])+1] + yAxis[yAxis.indexOf(currentSpot[1])-1]);
+            let southWest = document.getElementById(xAxis[xAxis.indexOf(currentSpot[0])-1] + yAxis[yAxis.indexOf(currentSpot[1])-1]);
+            let currentColor = document.getElementById(currentSpot).childNodes[0].id.slice(0,5);
+            
+            if(northEast.childNodes.length == 1){
+                if(!(currentColor == northEast.childNodes[0].id.slice(0,5))){
+                    pawnMoves.push(northEast.id);
+                }
+            } 
+            if(northWest.childNodes.length == 1){
+                if(!(currentColor == northWest.childNodes[0].id.slice(0,5))){
+                    pawnMoves.push(northWest.id);
+                }
+            } 
+            if(southEast.childNodes.length == 1){
+                if(!(currentColor == southEast.childNodes[0].id.slice(0,5))){
+                    pawnMoves.push(southEast.id);      
+                }
+            } 
+            if(southWest.childNodes.length == 1){
+                if(!(currentColor == southWest.childNodes[0].id.slice(0,5))){
+                    pawnMoves.push(southWest.id);
+                }
+            } 
 
             for(let k=0;k<pawnMoves.length;k++){
                 if (pawnMoves[k].length == 2){
