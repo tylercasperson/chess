@@ -198,6 +198,28 @@ piecesMovement = (currentSpot, chessPiece) => {
             if((xAxis[xSpot] + (parseInt(yAxis[ySpot])+1)).length == 2 && !(parseInt(yAxis[ySpot])+1 == 9)) pawnMoves.push(xAxis[xSpot] + parseInt(+(yAxis[ySpot]) + +1));
             if( (xAxis[xSpot] + parseInt((yAxis[ySpot])-1)).length == 2 && !(parseInt((yAxis[ySpot])-1)) == 0) pawnMoves.push(xAxis[xSpot] + parseInt((yAxis[ySpot])-1));
 
+            //add diagnal if a piece is there and two forward if the first move
+
+            let movingPawn = document.getElementById(document.getElementById(currentSpot).childNodes[0].id); 
+
+            if(movingPawn.classList.contains('first')){
+                if((xAxis[xSpot] + (parseInt(yAxis[ySpot])+1)).length == 2){
+                    if(!(parseInt(yAxis[ySpot])+2 == 9)){
+                        if(currentSpot[1] === 2 || currentSpot[1] === 7){
+                            pawnMoves.push(xAxis[xSpot] + parseInt(+(yAxis[ySpot]) + 2))
+                        }
+                    }
+                }
+                if( (xAxis[xSpot] + parseInt((yAxis[ySpot])-1)).length == 2){
+                    if(!(parseInt((yAxis[ySpot])-2)) == 0){
+                        if(currentSpot[1] === 2 || currentSpot[1] === 7){
+                            pawnMoves.push(xAxis[xSpot] + parseInt(+(yAxis[ySpot]) - 2))
+                        }
+                    }
+                }
+                movingPawn.classList.remove('first');
+            }
+
             for(let k=0;k<pawnMoves.length;k++){
                 if (pawnMoves[k].length == 2){
                     if (!(pawnMoves[k][1] == 9)){
