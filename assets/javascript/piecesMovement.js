@@ -1,15 +1,14 @@
 
 drag = (e) => {
     e.dataTransfer.setData("text", e.target.id);
+    let currentSpot = document.getElementById(e.target.id).parentNode.id;
 
-    let offBoard = document.getElementById(e.target.id).parentNode.id;
-
-    if (!(offBoard == 'blackPieces' || offBoard == 'whitePieces')) {
-        let currentCell = document.getElementById(e.target.id).parentNode.id;
+    if (!(currentSpot == 'blackPieces' || currentSpot == 'whitePieces')) {     
         let chessPiece = e.target.id.slice(5,-1);
-        piecesMovement(currentCell, chessPiece);
+        let possibleMoves = [];
+        piecesMovement(currentSpot, currentSpot, chessPiece, possibleMoves);        
+        document.getElementById(currentSpot).classList.add('youAreHere');
     }
-    console.log(e.target.id.slice(5,-1));
 }
 
 allowDrop = (e) => e.preventDefault();
@@ -17,16 +16,15 @@ allowDrop = (e) => e.preventDefault();
 drop = (e) => {
     e.preventDefault();
     let data = e.dataTransfer.getData('text');
-    let currentSquare = document.getElementById(e.target.id).id;
+    let currentSpot = document.getElementById(e.target.id).id;
+    let allowableMoves = document.getElementsByClassName('allowableMoves');        
+    let highlightedCells = [];
+
+    for(let i=0;i<allowableMoves.length;i++){                
+        highlightedCells.push(allowableMoves[i].attributes[0].nodeValue);
+    }
 
     removeHighlights = () => {
-        let allowableMoves = document.getElementsByClassName('allowableMoves');        
-        let highlightedCells = [];
-
-        for(let i=0;i<allowableMoves.length;i++){                
-            highlightedCells.push(allowableMoves[i].attributes[0].nodeValue);
-        }
-
         for(let j=0;j<highlightedCells.length;j++){
             let highlightedMoves = document.getElementById(highlightedCells[j]);
             highlightedMoves.classList.remove('allowableMoves');
@@ -34,40 +32,49 @@ drop = (e) => {
         }  
     }
 
-    if (document.getElementById(currentSquare).innerText == ''){
+    checkMovement = () => {
+        let oldSpot = document.getElementsByClassName('youAreHere');
+        if(!(oldSpot.length == 0)){
+            if(highlightedCells.indexOf(currentSpot) === -1){
+                document.getElementById(oldSpot[0].id).append(document.getElementById(document.getElementById(currentSpot).childNodes[0].id));   
+            }
+            oldSpot[0].classList.remove('youAreHere');
+        }
+        removeHighlights();
+    }
+
+    if (document.getElementById(currentSpot).innerText == ''){
         if(e.target.classList.contains('piece')) {
             return;
         } else {
             e.target.appendChild(document.getElementById(data));
-            removeHighlights();
+            checkMovement();
         }
     } else {
-        let battleCell = document.getElementById(document.getElementById(currentSquare).id);
+        let battleCell = document.getElementById(document.getElementById(currentSpot).id);
         
-        if(!(currentSquare == battleCell.id || document.getElementById(currentSquare).parentNode.id == battleCell.id)) {
+        if(data == battleCell.id || document.getElementById(currentSpot).parentNode.id == battleCell.id) {
             return;
         } else {
             if ( document.getElementById(document.getElementById(battleCell.id).parentNode.id) == null) {
-                document.getElementById(currentSquare).append(document.getElementById(data));
-                document.getElementById(document.getElementById(currentSquare).childNodes[0].id.slice(0,5)+'Pieces').append(battleCell.childNodes[0]);
+                document.getElementById(currentSpot).append(document.getElementById(data));
+                document.getElementById(document.getElementById(currentSpot).childNodes[0].id.slice(0,5)+'Pieces').append(battleCell.childNodes[0]);
             } else {
                 document.getElementById(document.getElementById(battleCell.id).parentNode.id).append(document.getElementById(data));
                 document.getElementById(battleCell.id.slice(0,5)+'Pieces').append(battleCell);
             }
-            removeHighlights();
+            checkMovement();
         }
     }
 }
 
-piecesMovement = (currentSpot, chessPiece) => {
-    // A chess board is commonly described in algebraic notation so a grid with numbers and letters describing each position on the board. It might be more steps but I do not think it is best to change common terms when presenting something to a client.
+piecesMovement = (currentSpot, oldSpot, chessPiece, possibleMoves) => {
     const xAxis = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     const yAxis = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
-    //Translates the current knight's position to integers in the arrays being used in the function.
     let xSpot = xAxis.indexOf(currentSpot.split('')[0]);
     let ySpot = yAxis.indexOf(currentSpot.split('')[1]);
-
+    
     switch(chessPiece) {
         case 'King':
             let kingX = [xSpot+1, xSpot-1];
@@ -151,7 +158,6 @@ piecesMovement = (currentSpot, chessPiece) => {
         case 'Knight':
             let knightMoves = [];
 
-            // Need to calculate/limit all of the possible moves a knight can make. 
             let knightX = [xSpot + 2, xSpot - 2, xSpot + 1, xSpot - 1].filter(function(cellPosition){
                 return (cellPosition > -1 && cellPosition < 8);
             });
@@ -159,7 +165,6 @@ piecesMovement = (currentSpot, chessPiece) => {
                 return (cellPosition > -1 && cellPosition < 8);
             });
 
-            //Combines the x and y possibilities for the knights moves. This step further limits the knight moving 3 total spaces. Two squares in one direction and one square in a perpendicular direction aka an L shape. 
             for (let i = 0; i < knightX.length; i++) {
                 for (let j = 0; j < knightY.length; j++) {  
                     let knightPossibilities = document.getElementById(xAxis[knightX[i]] + yAxis[knightY[j]]).classList;

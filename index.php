@@ -11,6 +11,8 @@
 <body>
 <script type="text/javascript" src="./assets/javascript/piecesMovement.js"></script>
     <?php
+        $oldSpot = "document.getElementById(e.target.id).parentNode.id;";
+
         $whiteKing1 = "<div id='whiteKing1' class='piece king' draggable='true' ondragstart=\"drag(event)\">&#x2654;</div>";
         $whiteQueen1 = "<div id='whiteQueen1' class='piece queen' draggable='true' ondragstart=\"drag(event)\">&#x2655;</div>";
         $whiteRook1 = "<div id='whiteRook1' class='piece rook' draggable='true' ondragstart=\"drag(event)\">&#x2656;</div>";
