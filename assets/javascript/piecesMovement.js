@@ -5,8 +5,7 @@ drag = (e) => {
 
     if (!(currentSpot == 'blackPieces' || currentSpot == 'whitePieces')) {     
         let chessPiece = e.target.id.slice(5,-1);
-        let possibleMoves = [];
-        piecesMovement(currentSpot, currentSpot, chessPiece, possibleMoves);        
+        piecesMovement(currentSpot, chessPiece);        
         document.getElementById(currentSpot).classList.add('youAreHere');
     }
 }
@@ -34,9 +33,15 @@ drop = (e) => {
 
     checkMovement = () => {
         let oldSpot = document.getElementsByClassName('youAreHere');
-        if(!(oldSpot.length == 0)){
+        if(!(oldSpot.length === 0)){
             if(highlightedCells.indexOf(currentSpot) === -1){
-                document.getElementById(oldSpot[0].id).append(document.getElementById(document.getElementById(currentSpot).childNodes[0].id));   
+                if( !(document.getElementById(currentSpot).parentNode.id.slice(5,11) === 'Pieces')) {
+                    if(!(document.getElementById(document.getElementById(currentSpot).childNodes[0]) === null) ){
+                        if(!(document.getElementById(document.getElementById(currentSpot).childNodes[0].id) === '') ){
+                            document.getElementById(oldSpot[0].id).append(document.getElementById(document.getElementById(currentSpot).childNodes[0].id));   
+                        }    
+                    }
+                }
             }
             oldSpot[0].classList.remove('youAreHere');
         }
@@ -56,19 +61,28 @@ drop = (e) => {
         if(data == battleCell.id || document.getElementById(currentSpot).parentNode.id == battleCell.id) {
             return;
         } else {
-            if ( document.getElementById(document.getElementById(battleCell.id).parentNode.id) == null) {
-                document.getElementById(currentSpot).append(document.getElementById(data));
-                document.getElementById(document.getElementById(currentSpot).childNodes[0].id.slice(0,5)+'Pieces').append(battleCell.childNodes[0]);
+            if(document.getElementById(document.getElementById(battleCell.id).parentNode.id) === null){
+                checkMovement();
+                return;
+            } 
+            if(highlightedCells.indexOf(document.getElementById(document.getElementById(battleCell.id).parentNode.id).id) === -1 ){
+                checkMovement();
+                return;
             } else {
-                document.getElementById(document.getElementById(battleCell.id).parentNode.id).append(document.getElementById(data));
-                document.getElementById(battleCell.id.slice(0,5)+'Pieces').append(battleCell);
+                if ( (document.getElementById(document.getElementById(battleCell.id).parentNode.id)) == null) {
+                    document.getElementById(currentSpot).append(document.getElementById(data));
+                    document.getElementById(document.getElementById(currentSpot).childNodes[0].id.slice(0,5)+'Pieces').append(battleCell.childNodes[0]);
+                } else {
+                        document.getElementById(document.getElementById(battleCell.id).parentNode.id).append(document.getElementById(data));
+                        document.getElementById(battleCell.id.slice(0,5)+'Pieces').append(battleCell);
+                }
             }
             checkMovement();
         }
     }
 }
 
-piecesMovement = (currentSpot, oldSpot, chessPiece, possibleMoves) => {
+piecesMovement = (currentSpot, chessPiece) => {
     const xAxis = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     const yAxis = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
