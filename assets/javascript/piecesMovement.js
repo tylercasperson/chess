@@ -37,8 +37,14 @@ drop = (e) => {
     }
 
     checkMovement = () => {
-        if(highlightedCells.length>0){
-            if(!(highlightedCells.indexOf(currentSpot) === -1)){
+        
+        if(highlightedCells.length>0){    
+            if(currentSpot.length === 2){
+                var thisSpot = currentSpot;
+            } else {
+                var thisSpot = document.getElementById(currentSpot).parentElement.id;
+            }
+            if(!(highlightedCells.indexOf(thisSpot) === -1)){
                 if(battleCell.childNodes.length == 1 ){
                     if( !(currentSpot.substring(0,5) === data.substring(0,5))){
                         if(currentSpot.length == 2){
