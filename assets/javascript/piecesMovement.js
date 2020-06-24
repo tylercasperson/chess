@@ -1,6 +1,9 @@
 
 drag = (e) => {
     e.dataTransfer.setData("text", e.target.id);
+    if(e.target.length === 1){
+        return;
+    } 
     let currentSpot = document.getElementById(e.target.id).parentNode.id;
 
     if (!(currentSpot == 'blackPieces' || currentSpot == 'whitePieces')) {     
@@ -16,8 +19,10 @@ drop = (e) => {
     e.preventDefault();
     let data = e.dataTransfer.getData('text');
     let currentSpot = document.getElementById(e.target.id).id;
+    let oldSpot = document.getElementsByClassName('youAreHere');
     let allowableMoves = document.getElementsByClassName('allowableMoves');        
     let highlightedCells = [];
+    let battleCell = document.getElementById(document.getElementById(currentSpot).id);
 
     for(let i=0;i<allowableMoves.length;i++){                
         highlightedCells.push(allowableMoves[i].attributes[0].nodeValue);
@@ -32,54 +37,37 @@ drop = (e) => {
     }
 
     checkMovement = () => {
-        let oldSpot = document.getElementsByClassName('youAreHere');
-        if(!(oldSpot.length === 0)){
-            if(highlightedCells.indexOf(currentSpot) === -1){
-                if( !(document.getElementById(currentSpot).parentNode.id.slice(5,11) === 'Pieces')) {
-                    if(!(document.getElementById(document.getElementById(currentSpot).childNodes[0]) === null) ){
-                        if(!(document.getElementById(document.getElementById(currentSpot).childNodes[0].id) === '') ){
-                            document.getElementById(oldSpot[0].id).append(document.getElementById(document.getElementById(currentSpot).childNodes[0].id));   
-                        }    
+        if(highlightedCells.length>0){
+            if(!(highlightedCells.indexOf(currentSpot) === -1)){
+                if(battleCell.childNodes.length == 1 ){
+                    if( !(currentSpot.substring(0,5) === data.substring(0,5))){
+                        if(currentSpot.length == 2){
+                            document.getElementById(document.getElementById(currentSpot).childNodes[0].id.substring(0,5)+'Pieces').append(document.getElementById(currentSpot).childNodes[0]);                        
+                            e.target.appendChild(document.getElementById(data));
+                        } else {
+                            document.getElementById(document.getElementById(battleCell.id).parentNode.id).append(document.getElementById(data));
+                            document.getElementById(battleCell.id.slice(0,5)+'Pieces').append(battleCell); 
+                        }
+                    }
+                } else {
+                    if(!(highlightedCells.indexOf(currentSpot) === -1)){
+                        e.target.appendChild(document.getElementById(data));
                     }
                 }
             }
             oldSpot[0].classList.remove('youAreHere');
+            removeHighlights();
         }
-        removeHighlights();
     }
 
-    if (document.getElementById(currentSpot).innerText == ''){
-        if(e.target.classList.contains('piece')) {
-            return;
-        } else {
-            e.target.appendChild(document.getElementById(data));
-            checkMovement();
-        }
-    } else {
-        let battleCell = document.getElementById(document.getElementById(currentSpot).id);
-        
-        if(data == battleCell.id || document.getElementById(currentSpot).parentNode.id == battleCell.id) {
-            return;
-        } else {
-            if(document.getElementById(document.getElementById(battleCell.id).parentNode.id) === null){
-                checkMovement();
-                return;
-            } 
-            if(highlightedCells.indexOf(document.getElementById(document.getElementById(battleCell.id).parentNode.id).id) === -1 ){
-                checkMovement();
-                return;
-            } else {
-                if ( (document.getElementById(document.getElementById(battleCell.id).parentNode.id)) == null) {
-                    document.getElementById(currentSpot).append(document.getElementById(data));
-                    document.getElementById(document.getElementById(currentSpot).childNodes[0].id.slice(0,5)+'Pieces').append(battleCell.childNodes[0]);
-                } else {
-                        document.getElementById(document.getElementById(battleCell.id).parentNode.id).append(document.getElementById(data));
-                        document.getElementById(battleCell.id.slice(0,5)+'Pieces').append(battleCell);
-                }
-            }
-            checkMovement();
-        }
+    //this is needed for development but will be removed in production.. probably will be replaced with buttons to start the game
+    if(highlightedCells.length === 0){
+        if(e.target.innerText.length === 0){
+        e.target.appendChild(document.getElementById(data));
+        return;
+       }
     }
+    checkMovement();
 }
 
 piecesMovement = (currentSpot, chessPiece) => {
@@ -194,6 +182,9 @@ piecesMovement = (currentSpot, chessPiece) => {
 
         case 'Pawn':
             let pawnMoves = [];
+
+            //still need to remove a pawn from moving backwards
+
 
             if((xAxis[xSpot] + (parseInt(yAxis[ySpot])+1)).length == 2 && !(parseInt(yAxis[ySpot])+1 == 9)) pawnMoves.push(xAxis[xSpot] + parseInt(+(yAxis[ySpot]) + +1));
             if( (xAxis[xSpot] + parseInt((yAxis[ySpot])-1)).length == 2 && !(parseInt((yAxis[ySpot])-1)) == 0) pawnMoves.push(xAxis[xSpot] + parseInt((yAxis[ySpot])-1));
