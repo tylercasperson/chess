@@ -8,8 +8,18 @@ drag = (e) => {
 
     if (!(currentSpot == 'blackPieces' || currentSpot == 'whitePieces')) {     
         let chessPiece = e.target.id.slice(5,-1);
+        let allowableMoves = document.getElementsByClassName('allowableMoves');        
         piecesMovement(currentSpot, chessPiece);        
         document.getElementById(currentSpot).classList.add('youAreHere');
+        
+        for(let i=0;i<allowableMoves.length;i++){
+            if(allowableMoves[i].classList.contains('dk')) allowableMoves[i].classList.add('dark');
+            if(allowableMoves[i].childNodes.length == 1){
+                if(allowableMoves[i].childNodes[0].id.substring(0,5) == e.target.id.substring(0,5)){
+                    allowableMoves[i].classList.remove('allowableMoves');
+                }
+            }
+        }
     }
 }
 
