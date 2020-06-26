@@ -45,6 +45,7 @@ drop = (e) => {
         for(let j=0;j<highlightedCells.length;j++){
             let highlightedMoves = document.getElementById(highlightedCells[j]);
             highlightedMoves.classList.remove('allowableMoves');
+            highlightedMoves.classList.remove('unblocked');
             if(highlightedMoves.classList.contains('dk')) highlightedMoves.classList.add('dark');
         }  
     }
