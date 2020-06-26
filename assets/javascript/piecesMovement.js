@@ -123,7 +123,6 @@ piecesMovement = (currentSpot, chessPiece) => {
                 }
     
                 for(let i=(xSpot-1);i>-1;i--){
-                    console.log(xAxis[i]+currentSpot[1]);
                     if(document.getElementById(xAxis[i]+currentSpot[1]).childNodes.length === 1){
                         if(!(document.getElementById(xAxis[i]+currentSpot[1]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5))){
                             document.getElementById(xAxis[i]+currentSpot[1]).classList.add('unblocked');
@@ -136,8 +135,30 @@ piecesMovement = (currentSpot, chessPiece) => {
                 }
             break;
             case 'vertical':
-                for(let i=0;i<allowableMoves.length;i++){
+                for(let i=(ySpot+1);i<yAxis.length;i++){
+                    if(document.getElementById(currentSpot[0] + yAxis[i]).childNodes.length === 1){
+                        if(!(document.getElementById(currentSpot[0] + yAxis[i]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5))){
+                            document.getElementById(currentSpot[0] + yAxis[i]).classList.add('unblocked');
+                            addDark();
+                            break;
+                        } else {
+                            addDark();
+                            break;
+                        }    
+                    }
+                    document.getElementById(currentSpot[0] + yAxis[i]).classList.add('unblocked');
+                }
     
+                for(let i=(ySpot-1);i>-1;i--){
+                    if(document.getElementById(currentSpot[0] + yAxis[i]).childNodes.length === 1){
+                        if(!(document.getElementById(currentSpot[0] + yAxis[i]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5))){
+                            document.getElementById(currentSpot[0] + yAxis[i]).classList.add('unblocked');
+                            break;
+                        } else {
+                            break;
+                        }    
+                    }
+                    document.getElementById(currentSpot[0] + yAxis[i]).classList.add('unblocked');
                 }
             break;
             case 'diagonal':
@@ -211,6 +232,7 @@ piecesMovement = (currentSpot, chessPiece) => {
                 rookPossibilities.remove('dark');
             }
             afterMovement('horizontal');
+            afterMovement('vertical');
         break;
 
         case 'Bishop':            
