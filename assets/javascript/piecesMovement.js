@@ -6,21 +6,24 @@ drag = (e) => {
     } 
     let currentSpot = document.getElementById(e.target.id).parentNode.id;
 
-    if (!(currentSpot == 'blackPieces' || currentSpot == 'whitePieces')) {     
-        let chessPiece = e.target.id.slice(5,-1);
-        let allowableMoves = document.getElementsByClassName('allowableMoves');        
-        piecesMovement(currentSpot, chessPiece);        
-        document.getElementById(currentSpot).classList.add('youAreHere');
-        
-        for(let i=0;i<allowableMoves.length;i++){
-            if(allowableMoves[i].classList.contains('dk')) allowableMoves[i].classList.add('dark');
-            if(allowableMoves[i].childNodes.length == 1){
-                if(allowableMoves[i].childNodes[0].id.substring(0,5) == e.target.id.substring(0,5)){
-                    allowableMoves[i].classList.remove('allowableMoves');
+    removeOptions = () => {
+        if (!(currentSpot == 'blackPieces' || currentSpot == 'whitePieces')) {     
+            let chessPiece = e.target.id.slice(5,-1);
+            var allowableMoves = document.getElementsByClassName('allowableMoves');        
+            piecesMovement(currentSpot, chessPiece);        
+            document.getElementById(currentSpot).classList.add('youAreHere');
+            
+            for(let i=0;i<allowableMoves.length;i++){
+                if(allowableMoves[i].classList.contains('dk')) allowableMoves[i].classList.add('dark');
+                if(allowableMoves[i].childNodes.length == 1){
+                    if(allowableMoves[i].childNodes[0].id.substring(0,5) == e.target.id.substring(0,5)){
+                        allowableMoves[i].classList.remove('allowableMoves');
+                    }
                 }
             }
         }
     }
+    removeOptions();
 }
 
 allowDrop = (e) => e.preventDefault();
@@ -30,7 +33,7 @@ drop = (e) => {
     let data = e.dataTransfer.getData('text');
     let currentSpot = document.getElementById(e.target.id).id;
     let oldSpot = document.getElementsByClassName('youAreHere');
-    let allowableMoves = document.getElementsByClassName('allowableMoves');        
+    var allowableMoves = document.getElementsByClassName('allowableMoves');        
     let highlightedCells = [];
     let battleCell = document.getElementById(document.getElementById(currentSpot).id);
 
@@ -86,13 +89,66 @@ drop = (e) => {
     checkMovement();
 }
 
-piecesMovement = (currentSpot, chessPiece) => {
+piecesMovement = (currentSpot, chessPiece) => {    
     const xAxis = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     const yAxis = ['1', '2', '3', '4', '5', '6', '7', '8'];
 
     let xSpot = xAxis.indexOf(currentSpot.split('')[0]);
     let ySpot = yAxis.indexOf(currentSpot.split('')[1]);
+
+    afterMovement = (direction) =>{
+        let allowableHighlights = document.getElementsByClassName('allowableMoves');
+        
+        addDark = () => {
+            for(let i=0;i<allowableHighlights.length;i++){
+                let highlightedMoves = document.getElementById(allowableHighlights[i].id);
+                if(highlightedMoves.classList.contains('dk')) highlightedMoves.classList.add('dark');
+            }  
+        }
+        
+        switch(direction){
+            case 'horizontal':
+                for(let i=(xSpot+1);i<xAxis.length;i++){
+                    if(document.getElementById(xAxis[i]+currentSpot[1]).childNodes.length === 1){
+                        if(!(document.getElementById(xAxis[i]+currentSpot[1]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5))){
+                            document.getElementById(xAxis[i]+currentSpot[1]).classList.add('unblocked');
+                            addDark();
+                            break;
+                        } else {
+                            addDark();
+                            break;
+                        }    
+                    }
+                    document.getElementById(xAxis[i]+currentSpot[1]).classList.add('unblocked');
+                }
     
+                for(let i=(xSpot-1);i>-1;i--){
+                    console.log(xAxis[i]+currentSpot[1]);
+                    if(document.getElementById(xAxis[i]+currentSpot[1]).childNodes.length === 1){
+                        if(!(document.getElementById(xAxis[i]+currentSpot[1]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5))){
+                            document.getElementById(xAxis[i]+currentSpot[1]).classList.add('unblocked');
+                            break;
+                        } else {
+                            break;
+                        }    
+                    }
+                    document.getElementById(xAxis[i]+currentSpot[1]).classList.add('unblocked');
+                }
+            break;
+            case 'vertical':
+                for(let i=0;i<allowableMoves.length;i++){
+    
+                }
+            break;
+            case 'diagonal':
+                for(let i=0;i<allowableMoves.length;i++){
+                    
+    
+                }
+            break;
+        }
+    }
+
     switch(chessPiece) {
         case 'King':
             let kingX = [xSpot+1, xSpot-1];
@@ -154,6 +210,7 @@ piecesMovement = (currentSpot, chessPiece) => {
                 rookPossibilities.add('allowableMoves');
                 rookPossibilities.remove('dark');
             }
+            afterMovement('horizontal');
         break;
 
         case 'Bishop':            
