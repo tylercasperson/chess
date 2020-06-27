@@ -51,7 +51,6 @@ drop = (e) => {
     }
 
     checkMovement = () => {
-        
         if(highlightedCells.length>0){    
             if(currentSpot.length === 2){
                 var thisSpot = currentSpot;
@@ -106,6 +105,8 @@ piecesMovement = (currentSpot, chessPiece) => {
                 if(highlightedMoves.classList.contains('dk')) highlightedMoves.classList.add('dark');
             }  
         }
+
+
         
         switch(direction){
             case 'horizontal':
@@ -163,9 +164,71 @@ piecesMovement = (currentSpot, chessPiece) => {
                 }
             break;
             case 'diagonal':
-                for(let i=0;i<allowableMoves.length;i++){
-                    
-    
+
+                checkPlacement = (diagonalArray) => {
+                    for(let i=0;i<diagonalArray.length;i++){
+                        let spotCheck = document.getElementById(diagonalArray[i]);
+        
+                        if(spotCheck.childNodes.length === 1){
+                            if(!(spotCheck.childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5))){
+                                spotCheck.classList.add('unblocked');
+                                addDark();
+                                break;
+                            } else {
+                                addDark();
+                                break;
+                            }
+                        }
+                        spotCheck.classList.add('unblocked');
+                    }
+                }
+
+                if(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
+                    let NEarray = [];
+                    NEarray.push(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]); //NE
+                    for(let i=0;i<Math.min((xAxis.length-(xSpot+1)),(yAxis.length-(ySpot+1)));i++){
+                        let NEdirection = xAxis[(xAxis.indexOf(NEarray[(NEarray.length-1)][0])+1)] + yAxis[(yAxis.indexOf(NEarray[(NEarray.length-1)][1])+1)];    
+                            if(NEdirection.length === 2){
+                                NEarray.push(NEdirection);                        
+                            }
+                    }
+                    checkPlacement(NEarray);
+                }
+                
+                if(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
+                    let SEarray = [];
+                    SEarray.push(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]); //SE
+                    for(let i=0;i<Math.min((xAxis.length-(xSpot+1)),(yAxis.length-(ySpot-1)))+1;i++){
+                        let southEast = xAxis[(xAxis.indexOf(SEarray[(SEarray.length-1)][0])+1)] + yAxis[(yAxis.indexOf(SEarray[(SEarray.length-1)][1])-1)];
+                        if(southEast.length === 2){
+                            SEarray.push(southEast);
+                        }
+                    }
+                    checkPlacement(SEarray);
+                }
+                
+                if(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
+                    let SWarray = [];
+                    SWarray.push(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]); //SW
+                    for(let i=0;i<Math.min((xAxis.length-(xSpot-1)),(yAxis.length-(ySpot-1)))+1;i++){
+                        let southWest = xAxis[(xAxis.indexOf(SWarray[(SWarray.length-1)][0])-1)] + yAxis[(yAxis.indexOf(SWarray[(SWarray.length-1)][1])-1)];
+                        if(southWest.length === 2){
+                            SWarray.push(southWest);
+                        }
+                    }
+                    checkPlacement(SWarray);
+                }
+
+                if(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
+                    let NWarray = [];
+                    NWarray.push(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]); //NW
+                    for(let i=0;i<Math.min((xAxis.length-(xSpot-1)),(yAxis.length-(ySpot-1)))+1;i++){
+                        let northWest = xAxis[(xAxis.indexOf(NWarray[(NWarray.length-1)][0])-1)] + yAxis[(yAxis.indexOf(NWarray[(NWarray.length-1)][1])+1)];
+                        if(northWest.length === 2){
+                            NWarray.push(northWest);
+                        }
+                    }
+                    checkPlacement(NWarray);
                 }
             break;
         }
@@ -251,6 +314,7 @@ piecesMovement = (currentSpot, chessPiece) => {
                 bishopPossibilities.add('allowableMoves');
                 bishopPossibilities.remove('dark');
             }
+            afterMovement('diagonal');
         break;
 
         case 'Knight':
