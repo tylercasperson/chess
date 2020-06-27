@@ -105,8 +105,6 @@ piecesMovement = (currentSpot, chessPiece) => {
                 if(highlightedMoves.classList.contains('dk')) highlightedMoves.classList.add('dark');
             }  
         }
-
-
         
         switch(direction){
             case 'horizontal':
@@ -280,6 +278,9 @@ piecesMovement = (currentSpot, chessPiece) => {
                 queenPossibilities.add('allowableMoves');
                 queenPossibilities.remove('dark');
             }
+            afterMovement('horizontal');
+            afterMovement('vertical');
+            afterMovement('diagonal');
         break;
 
         case 'Rook':
