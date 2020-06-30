@@ -43,22 +43,17 @@ drop = (e) => {
     let data = e.dataTransfer.getData('text');
     let currentSpot = document.getElementById(e.target.id).id;
     let oldSpot = document.getElementsByClassName('youAreHere');
-    let possibleMoves = document.getElementsByClassName('possibleMoves');        
     let allowableMoves = document.getElementsByClassName('allowableMoves');        
     let highlightedCells = [];
     let battleCell = document.getElementById(document.getElementById(currentSpot).id);
-
-    for(let i=0;i<possibleMoves.length;i++){                
-        highlightedCells.push(possibleMoves[i].attributes[0].nodeValue);
-    }
 
     for(let i=0;i<allowableMoves.length;i++){                
         highlightedCells.push(allowableMoves[i].attributes[0].nodeValue);
     }
 
     removeHighlights = () => {
-        for(let j=0;j<highlightedCells.length;j++){
-            let highlightedMoves = document.getElementById(highlightedCells[j]);
+        for(let i=0;i<highlightedCells.length;i++){
+            let highlightedMoves = document.getElementById(highlightedCells[i]);
             highlightedMoves.classList.remove('possibleMoves');
             highlightedMoves.classList.remove('allowableMoves');
             if(highlightedMoves.classList.contains('dk')) highlightedMoves.classList.add('dark');
