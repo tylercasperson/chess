@@ -9,10 +9,20 @@ drag = (e) => {
     removeOptions = () => {
         if (!(currentSpot == 'blackPieces' || currentSpot == 'whitePieces')) {     
             let chessPiece = e.target.id.slice(5,-1);
+            var possibleMoves = document.getElementsByClassName('possibleMoves');        
             var allowableMoves = document.getElementsByClassName('allowableMoves');        
             piecesMovement(currentSpot, chessPiece);        
             document.getElementById(currentSpot).classList.add('youAreHere');
             
+            for(let i=0;i<possibleMoves.length;i++){
+                if(possibleMoves[i].classList.contains('dk')) possibleMoves[i].classList.add('dark');
+                if(possibleMoves[i].childNodes.length == 1){
+                    if(possibleMoves[i].childNodes[0].id.substring(0,5) == e.target.id.substring(0,5)){
+                        possibleMoves[i].classList.remove('possibleMoves');
+                    }
+                }
+            }
+
             for(let i=0;i<allowableMoves.length;i++){
                 if(allowableMoves[i].classList.contains('dk')) allowableMoves[i].classList.add('dark');
                 if(allowableMoves[i].childNodes.length == 1){
@@ -33,9 +43,14 @@ drop = (e) => {
     let data = e.dataTransfer.getData('text');
     let currentSpot = document.getElementById(e.target.id).id;
     let oldSpot = document.getElementsByClassName('youAreHere');
-    var allowableMoves = document.getElementsByClassName('allowableMoves');        
+    let possibleMoves = document.getElementsByClassName('possibleMoves');        
+    let allowableMoves = document.getElementsByClassName('allowableMoves');        
     let highlightedCells = [];
     let battleCell = document.getElementById(document.getElementById(currentSpot).id);
+
+    for(let i=0;i<possibleMoves.length;i++){                
+        highlightedCells.push(possibleMoves[i].attributes[0].nodeValue);
+    }
 
     for(let i=0;i<allowableMoves.length;i++){                
         highlightedCells.push(allowableMoves[i].attributes[0].nodeValue);
@@ -44,13 +59,17 @@ drop = (e) => {
     removeHighlights = () => {
         for(let j=0;j<highlightedCells.length;j++){
             let highlightedMoves = document.getElementById(highlightedCells[j]);
+            highlightedMoves.classList.remove('possibleMoves');
             highlightedMoves.classList.remove('allowableMoves');
-            highlightedMoves.classList.remove('unblocked');
             if(highlightedMoves.classList.contains('dk')) highlightedMoves.classList.add('dark');
         }  
     }
 
     checkMovement = () => {
+        checkKing = () => {
+
+        }
+
         if(highlightedCells.length>0){    
             if(currentSpot.length === 2){
                 var thisSpot = currentSpot;
@@ -97,7 +116,7 @@ piecesMovement = (currentSpot, chessPiece) => {
     let ySpot = yAxis.indexOf(currentSpot.split('')[1]);
 
     afterMovement = (direction) =>{
-        let allowableHighlights = document.getElementsByClassName('allowableMoves');
+        let allowableHighlights = document.getElementsByClassName('possibleMoves');
         
         addDark = () => {
             for(let i=0;i<allowableHighlights.length;i++){
@@ -111,7 +130,7 @@ piecesMovement = (currentSpot, chessPiece) => {
                 for(let i=(xSpot+1);i<xAxis.length;i++){
                     if(document.getElementById(xAxis[i]+currentSpot[1]).childNodes.length === 1){
                         if(!(document.getElementById(xAxis[i]+currentSpot[1]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5))){
-                            document.getElementById(xAxis[i]+currentSpot[1]).classList.add('unblocked');
+                            document.getElementById(xAxis[i]+currentSpot[1]).classList.add('allowableMoves');
                             addDark();
                             break;
                         } else {
@@ -119,26 +138,26 @@ piecesMovement = (currentSpot, chessPiece) => {
                             break;
                         }    
                     }
-                    document.getElementById(xAxis[i]+currentSpot[1]).classList.add('unblocked');
+                    document.getElementById(xAxis[i]+currentSpot[1]).classList.add('allowableMoves');
                 }
     
                 for(let i=(xSpot-1);i>-1;i--){
                     if(document.getElementById(xAxis[i]+currentSpot[1]).childNodes.length === 1){
                         if(!(document.getElementById(xAxis[i]+currentSpot[1]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5))){
-                            document.getElementById(xAxis[i]+currentSpot[1]).classList.add('unblocked');
+                            document.getElementById(xAxis[i]+currentSpot[1]).classList.add('allowableMoves');
                             break;
                         } else {
                             break;
                         }    
                     }
-                    document.getElementById(xAxis[i]+currentSpot[1]).classList.add('unblocked');
+                    document.getElementById(xAxis[i]+currentSpot[1]).classList.add('allowableMoves');
                 }
             break;
             case 'vertical':
                 for(let i=(ySpot+1);i<yAxis.length;i++){
                     if(document.getElementById(currentSpot[0] + yAxis[i]).childNodes.length === 1){
                         if(!(document.getElementById(currentSpot[0] + yAxis[i]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5))){
-                            document.getElementById(currentSpot[0] + yAxis[i]).classList.add('unblocked');
+                            document.getElementById(currentSpot[0] + yAxis[i]).classList.add('allowableMoves');
                             addDark();
                             break;
                         } else {
@@ -146,19 +165,19 @@ piecesMovement = (currentSpot, chessPiece) => {
                             break;
                         }    
                     }
-                    document.getElementById(currentSpot[0] + yAxis[i]).classList.add('unblocked');
+                    document.getElementById(currentSpot[0] + yAxis[i]).classList.add('allowableMoves');
                 }
     
                 for(let i=(ySpot-1);i>-1;i--){
                     if(document.getElementById(currentSpot[0] + yAxis[i]).childNodes.length === 1){
                         if(!(document.getElementById(currentSpot[0] + yAxis[i]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5))){
-                            document.getElementById(currentSpot[0] + yAxis[i]).classList.add('unblocked');
+                            document.getElementById(currentSpot[0] + yAxis[i]).classList.add('allowableMoves');
                             break;
                         } else {
                             break;
                         }    
                     }
-                    document.getElementById(currentSpot[0] + yAxis[i]).classList.add('unblocked');
+                    document.getElementById(currentSpot[0] + yAxis[i]).classList.add('allowableMoves');
                 }
             break;
             case 'diagonal':
@@ -169,7 +188,7 @@ piecesMovement = (currentSpot, chessPiece) => {
         
                         if(spotCheck.childNodes.length === 1){
                             if(!(spotCheck.childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5))){
-                                spotCheck.classList.add('unblocked');
+                                spotCheck.classList.add('allowableMoves');
                                 addDark();
                                 break;
                             } else {
@@ -177,13 +196,13 @@ piecesMovement = (currentSpot, chessPiece) => {
                                 break;
                             }
                         }
-                        spotCheck.classList.add('unblocked');
+                        spotCheck.classList.add('allowableMoves');
                     }
                 }
 
                 if(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
                     let NEarray = [];
-                    NEarray.push(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]); //NE
+                    NEarray.push(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]);
                     for(let i=0;i<Math.min((xAxis.length-(xSpot+1)),(yAxis.length-(ySpot+1)));i++){
                         let NEdirection = xAxis[(xAxis.indexOf(NEarray[(NEarray.length-1)][0])+1)] + yAxis[(yAxis.indexOf(NEarray[(NEarray.length-1)][1])+1)];    
                             if(NEdirection.length === 2){
@@ -195,7 +214,7 @@ piecesMovement = (currentSpot, chessPiece) => {
                 
                 if(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
                     let SEarray = [];
-                    SEarray.push(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]); //SE
+                    SEarray.push(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]);
                     for(let i=0;i<Math.min((xAxis.length-(xSpot+1)),(yAxis.length-(ySpot-1)))+1;i++){
                         let southEast = xAxis[(xAxis.indexOf(SEarray[(SEarray.length-1)][0])+1)] + yAxis[(yAxis.indexOf(SEarray[(SEarray.length-1)][1])-1)];
                         if(southEast.length === 2){
@@ -207,7 +226,7 @@ piecesMovement = (currentSpot, chessPiece) => {
                 
                 if(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
                     let SWarray = [];
-                    SWarray.push(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]); //SW
+                    SWarray.push(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]);
                     for(let i=0;i<Math.min((xAxis.length-(xSpot-1)),(yAxis.length-(ySpot-1)))+1;i++){
                         let southWest = xAxis[(xAxis.indexOf(SWarray[(SWarray.length-1)][0])-1)] + yAxis[(yAxis.indexOf(SWarray[(SWarray.length-1)][1])-1)];
                         if(southWest.length === 2){
@@ -219,7 +238,7 @@ piecesMovement = (currentSpot, chessPiece) => {
 
                 if(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
                     let NWarray = [];
-                    NWarray.push(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]); //NW
+                    NWarray.push(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]);
                     for(let i=0;i<Math.min((xAxis.length-(xSpot-1)),(yAxis.length-(ySpot-1)))+1;i++){
                         let northWest = xAxis[(xAxis.indexOf(NWarray[(NWarray.length-1)][0])-1)] + yAxis[(yAxis.indexOf(NWarray[(NWarray.length-1)][1])+1)];
                         if(northWest.length === 2){
@@ -275,7 +294,7 @@ piecesMovement = (currentSpot, chessPiece) => {
 
             for(let j=0;j<queenMoves.length;j++){
                 let queenPossibilities = document.getElementById(queenMoves[j]).classList;
-                queenPossibilities.add('allowableMoves');
+                queenPossibilities.add('possibleMoves');
                 queenPossibilities.remove('dark');
             }
             afterMovement('horizontal');
@@ -293,7 +312,7 @@ piecesMovement = (currentSpot, chessPiece) => {
 
             for (let j=0;j<rookMoves.length;j++){
                 let rookPossibilities = document.getElementById(rookMoves[j]).classList;
-                rookPossibilities.add('allowableMoves');
+                rookPossibilities.add('possibleMoves');
                 rookPossibilities.remove('dark');
             }
             afterMovement('horizontal');
@@ -312,7 +331,7 @@ piecesMovement = (currentSpot, chessPiece) => {
 
             for(let j=0;j<bishopMoves.length;j++){
                 let bishopPossibilities = document.getElementById(bishopMoves[j]).classList;
-                bishopPossibilities.add('allowableMoves');
+                bishopPossibilities.add('possibleMoves');
                 bishopPossibilities.remove('dark');
             }
             afterMovement('diagonal');

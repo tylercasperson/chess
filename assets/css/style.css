@@ -34,11 +34,7 @@ table {
     background: white;
 }
 
-/* .allowableMoves {
-    background: green;
-} */
-
-.unblocked {
+.allowableMoves {
     background: green;
 }
 

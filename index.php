@@ -47,51 +47,49 @@
         $blackPawn7 = "<div id='blackPawn7' class='piece pawn first' draggable='true' ondragstart=\"drag(event)\">&#x265F;</div>";
         $blackPawn8 = "<div id='blackPawn8' class='piece pawn first' draggable='true' ondragstart=\"drag(event)\">&#x265F;</div>";
 
-
         echo "<div id='whitePieces' ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">" . $whiteKing1 . $whiteQueen1 . $whiteRook1 . $whiteRook2 . $whiteBishop1 . $whiteBishop2 . $whiteKnight1 . $whiteKnight2 . $whitePawn1 . $whitePawn2 . $whitePawn3 . $whitePawn4 . $whitePawn5 . $whitePawn6 . $whitePawn7 . $whitePawn8 . "</div>";
         echo "<div id='blackPieces' ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">" . $blackKing1 . $blackQueen1 . $blackRook1 . $blackRook2 . $blackBishop1 . $blackBishop2 . $blackKnight1 . $blackKnight2 . $blackPawn1 . $blackPawn2 . $blackPawn3 . $blackPawn4 . $blackPawn5 . $blackPawn6 . $blackPawn7 . $blackPawn8 . "</div>";
     ?>
 
-    <table>
-        <tbody>
-        <?php
-            $xAxis = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
-            $yAxis = array('1', '2', '3', '4', '5', '6', '7', '8');
+        <table>
+            <tbody>
+            <?php
+                $xAxis = array('a', 'b', 'c', 'd', 'e', 'f', 'g', 'h');
+                $yAxis = array('1', '2', '3', '4', '5', '6', '7', '8');
 
-            echo "<tr>";
-            for($x=0;$x<8;$x++){
-                if($x==0){
-                    echo "<td></td>";
-                }
-                echo "<td class='xLegend'>" . $xAxis[$x] . "</td>";
-            }
-            echo "</tr>";
-
-            for($row = 0; $row <= 7; $row++){
-                echo "<tr class='row'>"; 
-                echo "<td class='yLegend'>" . $yAxis[(7-$row)] . "</td>";
-                for($column = 0; $column <= 7; $column++){
-                    if(($row + $column) % 2 == 0){
-                        echo "<td id='" . $xAxis[$column] . $yAxis[7-$row] . "' class='cell light lt' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
-                    } else {
-                        echo "<td id='" . $xAxis[$column] . $yAxis[7-$row] . "' class='cell dark dk' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
+                echo "<tr>";
+                for($x=0;$x<8;$x++){
+                    if($x==0){
+                        echo "<td></td>";
                     }
+                    echo "<td class='xLegend'>" . $xAxis[$x] . "</td>";
                 }
-                echo "<td class='yLegend'>" . $yAxis[(7-$row)] . "</td>";
                 echo "</tr>";
-            } 
 
-            echo "<tr>";
-            for($x=0;$x<8;$x++){
-                if($x==0){
-                    echo "<td></td>";
+                for($row = 0; $row <= 7; $row++){
+                    echo "<tr class='row'>"; 
+                    echo "<td class='yLegend'>" . $yAxis[(7-$row)] . "</td>";
+                    for($column = 0; $column <= 7; $column++){
+                        if(($row + $column) % 2 == 0){
+                            echo "<td id='" . $xAxis[$column] . $yAxis[7-$row] . "' class='cell light lt' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
+                        } else {
+                            echo "<td id='" . $xAxis[$column] . $yAxis[7-$row] . "' class='cell dark dk' ondrop='drop(event)' ondragover='allowDrop(event)'></td>";
+                        }
+                    }
+                    echo "<td class='yLegend'>" . $yAxis[(7-$row)] . "</td>";
+                    echo "</tr>";
+                } 
+
+                echo "<tr>";
+                for($x=0;$x<8;$x++){
+                    if($x==0){
+                        echo "<td></td>";
+                    }
+                    echo "<td class='xLegend'>" . $xAxis[$x] . "</td>";
                 }
-                echo "<td class='xLegend'>" . $xAxis[$x] . "</td>";
-            }
-            echo "</tr>";
-        ?>
-        </tbody>
-    </table>
-    
+                echo "</tr>";
+            ?>
+            </tbody>
+        </table>    
 </body>
 </html>
