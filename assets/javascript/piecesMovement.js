@@ -1,37 +1,44 @@
 startGame = () => {
-    document.getElementById('e8').append(document.getElementById('blackKing1'));
-    document.getElementById('d8').append(document.getElementById('blackQueen1'));
-    document.getElementById('a8').append(document.getElementById('blackRook1'));
-    document.getElementById('h8').append(document.getElementById('blackRook2'));
-    document.getElementById('c8').append(document.getElementById('blackBishop1'));
-    document.getElementById('f8').append(document.getElementById('blackBishop2'));
-    document.getElementById('b8').append(document.getElementById('blackKnight1'));
-    document.getElementById('g8').append(document.getElementById('blackKnight2'));
-    document.getElementById('a7').append(document.getElementById('blackPawn1'));
-    document.getElementById('b7').append(document.getElementById('blackPawn2'));
-    document.getElementById('c7').append(document.getElementById('blackPawn3'));
-    document.getElementById('d7').append(document.getElementById('blackPawn4'));
-    document.getElementById('e7').append(document.getElementById('blackPawn5'));
-    document.getElementById('f7').append(document.getElementById('blackPawn6'));
-    document.getElementById('g7').append(document.getElementById('blackPawn7'));
-    document.getElementById('h7').append(document.getElementById('blackPawn8'));
+    var player1 = document.getElementById('selectPlayer1').value.substring(9);
+    if(document.getElementById('selectPlayer1').value.substring(9) === 'white'){
+        var player2 = 'black';
+    } else {
+        var player2 = 'white';
+    }
 
-    document.getElementById('e1').append(document.getElementById('whiteKing1'));
-    document.getElementById('d1').append(document.getElementById('whiteQueen1'));
-    document.getElementById('a1').append(document.getElementById('whiteRook1'));
-    document.getElementById('h1').append(document.getElementById('whiteRook2'));
-    document.getElementById('c1').append(document.getElementById('whiteBishop1'));
-    document.getElementById('f1').append(document.getElementById('whiteBishop2'));
-    document.getElementById('b1').append(document.getElementById('whiteKnight1'));
-    document.getElementById('g1').append(document.getElementById('whiteKnight2'));
-    document.getElementById('a2').append(document.getElementById('whitePawn1'));
-    document.getElementById('b2').append(document.getElementById('whitePawn2'));
-    document.getElementById('c2').append(document.getElementById('whitePawn3'));
-    document.getElementById('d2').append(document.getElementById('whitePawn4'));
-    document.getElementById('e2').append(document.getElementById('whitePawn5'));
-    document.getElementById('f2').append(document.getElementById('whitePawn6'));
-    document.getElementById('g2').append(document.getElementById('whitePawn7'));
-    document.getElementById('h2').append(document.getElementById('whitePawn8'));
+    document.getElementById('e1').append(document.getElementById(player1 + 'King1'));
+    document.getElementById('d1').append(document.getElementById(player1 + 'Queen1'));
+    document.getElementById('a1').append(document.getElementById(player1 + 'Rook1'));
+    document.getElementById('h1').append(document.getElementById(player1 + 'Rook2'));
+    document.getElementById('c1').append(document.getElementById(player1 + 'Bishop1'));
+    document.getElementById('f1').append(document.getElementById(player1 + 'Bishop2'));
+    document.getElementById('b1').append(document.getElementById(player1 + 'Knight1'));
+    document.getElementById('g1').append(document.getElementById(player1 + 'Knight2'));
+    document.getElementById('a2').append(document.getElementById(player1 + 'Pawn1'));
+    document.getElementById('b2').append(document.getElementById(player1 + 'Pawn2'));
+    document.getElementById('c2').append(document.getElementById(player1 + 'Pawn3'));
+    document.getElementById('d2').append(document.getElementById(player1 + 'Pawn4'));
+    document.getElementById('e2').append(document.getElementById(player1 + 'Pawn5'));
+    document.getElementById('f2').append(document.getElementById(player1 + 'Pawn6'));
+    document.getElementById('g2').append(document.getElementById(player1 + 'Pawn7'));
+    document.getElementById('h2').append(document.getElementById(player1 + 'Pawn8'));
+
+    document.getElementById('e8').append(document.getElementById(player2 + 'King1'));
+    document.getElementById('d8').append(document.getElementById(player2 + 'Queen1'));
+    document.getElementById('a8').append(document.getElementById(player2 + 'Rook1'));
+    document.getElementById('h8').append(document.getElementById(player2 + 'Rook2'));
+    document.getElementById('c8').append(document.getElementById(player2 + 'Bishop1'));
+    document.getElementById('f8').append(document.getElementById(player2 + 'Bishop2'));
+    document.getElementById('b8').append(document.getElementById(player2 + 'Knight1'));
+    document.getElementById('g8').append(document.getElementById(player2 + 'Knight2'));
+    document.getElementById('a7').append(document.getElementById(player2 + 'Pawn1'));
+    document.getElementById('b7').append(document.getElementById(player2 + 'Pawn2'));
+    document.getElementById('c7').append(document.getElementById(player2 + 'Pawn3'));
+    document.getElementById('d7').append(document.getElementById(player2 + 'Pawn4'));
+    document.getElementById('e7').append(document.getElementById(player2 + 'Pawn5'));
+    document.getElementById('f7').append(document.getElementById(player2 + 'Pawn6'));
+    document.getElementById('g7').append(document.getElementById(player2 + 'Pawn7'));
+    document.getElementById('h7').append(document.getElementById(player2 + 'Pawn8'));
 }
 
 

@@ -50,6 +50,10 @@
         echo "<div id='blackPieces' ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\">" . $blackKing1 . $blackQueen1 . $blackRook1 . $blackRook2 . $blackBishop1 . $blackBishop2 . $blackKnight1 . $blackKnight2 . $blackPawn1 . $blackPawn2 . $blackPawn3 . $blackPawn4 . $blackPawn5 . $blackPawn6 . $blackPawn7 . $blackPawn8 . "</div>";
 
         echo "<button onclick='startGame()'>Start Game</button>";
+        echo "<select id='selectPlayer1'>";
+        echo "<option>Player 1 white</option>";
+        echo "<option>Player 1 black</option>";
+        echo "</select>"
 
     ?>
 
