@@ -450,26 +450,34 @@ piecesMovement = (currentSpot, chessPiece) => {
             let southWest = document.getElementById(xAxis[xAxis.indexOf(currentSpot[0])-1] + yAxis[yAxis.indexOf(currentSpot[1])-1]);
             let currentColor = document.getElementById(currentSpot).childNodes[0].id.slice(0,5);
             
-            if(northEast.childNodes.length == 1){
-                if(!(currentColor == northEast.childNodes[0].id.slice(0,5))){
-                    pawnMoves.push(northEast.id);
-                }
-            } 
-            if(northWest.childNodes.length == 1){
-                if(!(currentColor == northWest.childNodes[0].id.slice(0,5))){
-                    pawnMoves.push(northWest.id);
-                }
-            } 
-            if(southEast.childNodes.length == 1){
-                if(!(currentColor == southEast.childNodes[0].id.slice(0,5))){
-                    pawnMoves.push(southEast.id);      
-                }
-            } 
-            if(southWest.childNodes.length == 1){
-                if(!(currentColor == southWest.childNodes[0].id.slice(0,5))){
-                    pawnMoves.push(southWest.id);
-                }
-            } 
+            if(!(northEast == null)){
+                if(northEast.childNodes.length == 1){
+                    if(!(currentColor == northEast.childNodes[0].id.slice(0,5))){
+                        pawnMoves.push(northEast.id);
+                    }
+                } 
+            }
+            if(!(northWest == null)){
+                if(northWest.childNodes.length == 1){
+                    if(!(currentColor == northWest.childNodes[0].id.slice(0,5))){
+                        pawnMoves.push(northWest.id);
+                    }
+                } 
+            }
+            if(!(southEast == null)){
+                if(southEast.childNodes.length == 1){
+                    if(!(currentColor == southEast.childNodes[0].id.slice(0,5))){
+                        pawnMoves.push(southEast.id);      
+                    }
+                } 
+            }
+            if(!(southWest == null)){
+                if(southWest.childNodes.length == 1){
+                    if(!(currentColor == southWest.childNodes[0].id.slice(0,5))){
+                        pawnMoves.push(southWest.id);
+                    }
+                } 
+            }
 
             for(let k=0;k<pawnMoves.length;k++){
                 if (pawnMoves[k].length == 2){
