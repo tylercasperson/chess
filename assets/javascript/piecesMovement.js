@@ -108,6 +108,11 @@ drop = (e) => {
 
         }
 
+        if(allowableMoves.length === 0){
+            console.log(data);
+            oldSpot[0].appendChild(document.getElementById(data));   
+        }
+
         if(highlightedCells.length>0){    
             if(currentSpot.length === 2){
                 var thisSpot = currentSpot;
@@ -137,12 +142,12 @@ drop = (e) => {
     }
 
     //this is needed for development but will be removed in production.. probably will be replaced with buttons to start the game
-    if(highlightedCells.length === 0){
-        if(e.target.innerText.length === 0){
-        e.target.appendChild(document.getElementById(data));
-        return;
-       }
-    }
+    // if(highlightedCells.length === 0){
+    //     if(e.target.innerText.length === 0){
+    //     e.target.appendChild(document.getElementById(data));
+    //     return;
+    //    }
+    // }
     checkMovement();
 }
 
@@ -237,53 +242,61 @@ piecesMovement = (currentSpot, chessPiece) => {
                         spotCheck.classList.add('allowableMoves');
                     }
                 }
-
-                if(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
-                    let NEarray = [];
-                    NEarray.push(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]);
-                    for(let i=0;i<Math.min((xAxis.length-(xSpot+1)),(yAxis.length-(ySpot+1)));i++){
-                        let NEdirection = xAxis[(xAxis.indexOf(NEarray[(NEarray.length-1)][0])+1)] + yAxis[(yAxis.indexOf(NEarray[(NEarray.length-1)][1])+1)];    
-                            if(NEdirection.length === 2){
-                                NEarray.push(NEdirection);                        
+                
+                if(!(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot+1)])) == null){
+                    if(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
+                        let NEarray = [];
+                        NEarray.push(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]);
+                        for(let i=0;i<Math.min((xAxis.length-(xSpot+1)),(yAxis.length-(ySpot+1)));i++){
+                            let NEdirection = xAxis[(xAxis.indexOf(NEarray[(NEarray.length-1)][0])+1)] + yAxis[(yAxis.indexOf(NEarray[(NEarray.length-1)][1])+1)];    
+                                if(NEdirection.length === 2){
+                                    NEarray.push(NEdirection);                        
+                                }
+                        }
+                        checkPlacement(NEarray);
+                    }
+                }
+                
+                if(!(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot-1)])) == null){
+                    if(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
+                        let SEarray = [];
+                        SEarray.push(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]);
+                        for(let i=0;i<Math.min((xAxis.length-(xSpot+1)),(yAxis.length-(ySpot-1)))+1;i++){
+                            let southEast = xAxis[(xAxis.indexOf(SEarray[(SEarray.length-1)][0])+1)] + yAxis[(yAxis.indexOf(SEarray[(SEarray.length-1)][1])-1)];
+                            if(southEast.length === 2){
+                                SEarray.push(southEast);
                             }
+                        }
+                        checkPlacement(SEarray);
                     }
-                    checkPlacement(NEarray);
                 }
                 
-                if(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
-                    let SEarray = [];
-                    SEarray.push(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]);
-                    for(let i=0;i<Math.min((xAxis.length-(xSpot+1)),(yAxis.length-(ySpot-1)))+1;i++){
-                        let southEast = xAxis[(xAxis.indexOf(SEarray[(SEarray.length-1)][0])+1)] + yAxis[(yAxis.indexOf(SEarray[(SEarray.length-1)][1])-1)];
-                        if(southEast.length === 2){
-                            SEarray.push(southEast);
+                if(!(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot-1)])) == null){
+                    if(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
+                        let SWarray = [];
+                        SWarray.push(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]);
+                        for(let i=0;i<Math.min((xAxis.length-(xSpot-1)),(yAxis.length-(ySpot-1)))+1;i++){
+                            let southWest = xAxis[(xAxis.indexOf(SWarray[(SWarray.length-1)][0])-1)] + yAxis[(yAxis.indexOf(SWarray[(SWarray.length-1)][1])-1)];
+                            if(southWest.length === 2){
+                                SWarray.push(southWest);
+                            }
                         }
+                        checkPlacement(SWarray);
                     }
-                    checkPlacement(SEarray);
-                }
-                
-                if(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
-                    let SWarray = [];
-                    SWarray.push(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]);
-                    for(let i=0;i<Math.min((xAxis.length-(xSpot-1)),(yAxis.length-(ySpot-1)))+1;i++){
-                        let southWest = xAxis[(xAxis.indexOf(SWarray[(SWarray.length-1)][0])-1)] + yAxis[(yAxis.indexOf(SWarray[(SWarray.length-1)][1])-1)];
-                        if(southWest.length === 2){
-                            SWarray.push(southWest);
-                        }
-                    }
-                    checkPlacement(SWarray);
                 }
 
-                if(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
-                    let NWarray = [];
-                    NWarray.push(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]);
-                    for(let i=0;i<Math.min((xAxis.length-(xSpot-1)),(yAxis.length-(ySpot-1)))+1;i++){
-                        let northWest = xAxis[(xAxis.indexOf(NWarray[(NWarray.length-1)][0])-1)] + yAxis[(yAxis.indexOf(NWarray[(NWarray.length-1)][1])+1)];
-                        if(northWest.length === 2){
-                            NWarray.push(northWest);
+                if(!(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot+1)])) == null){
+                    if(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
+                        let NWarray = [];
+                        NWarray.push(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]);
+                        for(let i=0;i<Math.min((xAxis.length-(xSpot-1)),(yAxis.length-(ySpot-1)))+1;i++){
+                            let northWest = xAxis[(xAxis.indexOf(NWarray[(NWarray.length-1)][0])-1)] + yAxis[(yAxis.indexOf(NWarray[(NWarray.length-1)][1])+1)];
+                            if(northWest.length === 2){
+                                NWarray.push(northWest);
+                            }
                         }
+                        checkPlacement(NWarray);
                     }
-                    checkPlacement(NWarray);
                 }
             break;
         }
