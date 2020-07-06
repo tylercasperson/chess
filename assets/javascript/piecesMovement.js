@@ -242,8 +242,8 @@ piecesMovement = (currentSpot, chessPiece) => {
                         spotCheck.classList.add('allowableMoves');
                     }
                 }
-                
-                if(!(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot+1)])) == null){
+
+                if(!(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]) == null) ){
                     if(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
                         let NEarray = [];
                         NEarray.push(xAxis[(xSpot+1)]+yAxis[(ySpot+1)]);
@@ -257,7 +257,7 @@ piecesMovement = (currentSpot, chessPiece) => {
                     }
                 }
                 
-                if(!(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot-1)])) == null){
+                if(!(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]) == null) ){
                     if(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
                         let SEarray = [];
                         SEarray.push(xAxis[(xSpot+1)]+yAxis[(ySpot-1)]);
@@ -271,7 +271,7 @@ piecesMovement = (currentSpot, chessPiece) => {
                     }
                 }
                 
-                if(!(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot-1)])) == null){
+                if(!(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]) == null) ){
                     if(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
                         let SWarray = [];
                         SWarray.push(xAxis[(xSpot-1)]+yAxis[(ySpot-1)]);
@@ -285,7 +285,7 @@ piecesMovement = (currentSpot, chessPiece) => {
                     }
                 }
 
-                if(!(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot+1)])) == null){
+                if(!(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]) == null) ){
                     if(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]).childElementCount === 0 || !(document.getElementById(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]).childNodes[0].id.substring(0,5) === document.getElementById(currentSpot).childNodes[0].id.substring(0,5)) ){
                         let NWarray = [];
                         NWarray.push(xAxis[(xSpot-1)]+yAxis[(ySpot+1)]);
